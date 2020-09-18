@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pdf_test/widget/ui/sharedcomponent/FormSharedComponentWidget.dart';
+import 'package:pdf_test/widget/ui/sharedcomponents/FormSharedComponentWidget.dart';
 
 class ContactorDetailWidget extends StatelessWidget {
   ContactorDetailWidget(
