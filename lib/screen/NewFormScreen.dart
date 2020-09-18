@@ -32,7 +32,7 @@ class _NewFormScreenState extends State<NewFormScreen> {
     //first page
     list.add(InvoiceDetailWidget());
     //second page
-    list.add(ContactorDetailWidget("","","",""));
+    list.add(ContactorDetailWidget("", "", "", ""));
     //third page
     list.add(InvoiceDetailWidget());
     //fourth page
@@ -59,7 +59,7 @@ class _NewFormScreenState extends State<NewFormScreen> {
             children: <Widget>[
               pagination(1, "Invoice"),
               paginationBlocks(),
-              pagination(2, "Contactor"),
+              pagination(2, "Contractor"),
               paginationBlocks(),
               pagination(3, "Client"),
               paginationBlocks(),
@@ -80,26 +80,84 @@ class _NewFormScreenState extends State<NewFormScreen> {
               ),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(30.0),
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       border: Border.all(
-          //         color: Colors.grey[500],
-          //       ),
-          //       borderRadius: BorderRadius.all(Radius.circular(20)),
-          //     ),
-          //     height: 40,
-          //     width: double.infinity,
-          //     child: FlatButton(
-          //       textColor: Theme.of(context).primaryColor,
-          //       onPressed: () {
-          //
-          //       },
-          //       child: Text("Next",style: TextStyle(fontWeight: FontWeight.normal),),
-          //     ),
-          //   ),
-          // ),
+          backAndNextButton(context),
+        ],
+      ),
+    );
+  }
+
+  Widget backAndNextButton(BuildContext context) {
+    Expanded backButton() {
+      return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey[500],
+              ),
+              color: Colors.red[700],
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            height: 40,
+            width: double.infinity,
+            child: FlatButton(
+              textColor: Colors.white,
+              onPressed: () {
+                if (currentPagination != 1) {
+                  setState(() {
+                    currentPagination--;
+                  });
+                }
+              },
+              child: Text(
+                "Back",
+                style: TextStyle(fontWeight: FontWeight.normal),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Expanded nextButton() {
+      return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey[500],
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            height: 40,
+            width: double.infinity,
+            child: FlatButton(
+              textColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                if (currentPagination < list.length) {
+                  setState(() {
+                    currentPagination++;
+                  });
+                }
+              },
+              child: Text(
+                "Next",
+                style: TextStyle(fontWeight: FontWeight.normal),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, right: 30, bottom: 25),
+      child: Row(
+        children: [
+          backButton(),
+          nextButton(),
         ],
       ),
     );
@@ -135,7 +193,7 @@ class _NewFormScreenState extends State<NewFormScreen> {
           ),
           Text(
             title,
-            style: TextStyle(fontSize: 12.5, fontWeight: textBold),
+            style: TextStyle(fontSize: 10.5, fontWeight: textBold),
           ),
           Text(
             "details",

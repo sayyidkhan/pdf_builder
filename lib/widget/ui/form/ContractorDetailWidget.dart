@@ -64,32 +64,4 @@ class ContactorDetailWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField({
-    String labelText,
-    int textFieldMaxLength,
-    String errorMessage,
-    Object inputValue,
-    bool validationRequired = false,
-  }) {
-    if (validationRequired) {
-      return TextFormField(
-        decoration: InputDecoration(labelText: labelText),
-        maxLength: textFieldMaxLength,
-        validator: (String value) {
-          return value.isEmpty ? errorMessage : null;
-        },
-        onSaved: (String value) {
-          inputValue = value;
-        },
-      );
-    }
-    return TextFormField(
-      decoration: InputDecoration(labelText: labelText),
-      maxLength: textFieldMaxLength,
-      onSaved: (String value) {
-        inputValue = value;
-      },
-    );
-  }
-
 }

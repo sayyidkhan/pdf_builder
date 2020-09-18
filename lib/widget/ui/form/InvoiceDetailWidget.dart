@@ -42,6 +42,22 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Invoice Details",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.grey.shade700,
+              ),
+            ),
+          ),
+        ),
         Column(
           children: [
             FormSharedComponentWidget.buildTextField(
