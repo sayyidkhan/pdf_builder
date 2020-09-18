@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_test/database/PdfForm.dart';
-import 'package:pdf_test/widget/ui/form/FormSharedComponentWidget.dart';
+import 'package:pdf_test/widget/ui/sharedcomponent/FormSharedComponentWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceWidget.dart';
 import 'package:pdf_test/widget/ui/form/ServiceDetailsWidget.dart';
 
