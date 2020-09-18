@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_test/database/PdfForm.dart';
+import 'package:pdf_test/widget/ui/form/ClientDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/ContractorDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceDetailWidget.dart';
 
@@ -34,7 +35,7 @@ class _NewFormScreenState extends State<NewFormScreen> {
     //second page
     list.add(ContactorDetailWidget("", "", "", ""));
     //third page
-    list.add(InvoiceDetailWidget());
+    list.add(ClientDetailWidget("","","",""));
     //fourth page
     list.add(InvoiceDetailWidget());
     return list;
