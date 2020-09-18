@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_test/database/PdfForm.dart';
+import 'package:pdf_test/widget/ui/form/FormSharedComponentWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceWidget.dart';
 import 'package:pdf_test/widget/ui/form/ServiceDetailsWidget.dart';
 
@@ -81,7 +82,7 @@ class FormScreenState extends State<FormScreen> {
                 icons: Icon(Icons.textsms),
                 myInnerComponents: Column(
                   children: <Widget>[
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Invoice No",
                       textFieldMaxLength: 10,
                       errorMessage: 'Invoice Number is Required',
@@ -115,27 +116,27 @@ class FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Company Name",
                       textFieldMaxLength: 30,
                       errorMessage: 'Company Name is Required',
                       inputValue: _yourCompanyName,
                       validationRequired: true,
                     ),
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Address Line 1",
                       textFieldMaxLength: 30,
                       errorMessage: 'Address Line 1 cannot be empty',
                       inputValue: _addressLine1,
                       validationRequired: true,
                     ),
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Address Line 2",
                       textFieldMaxLength: 30,
                       errorMessage: 'Address Line 1 cannot be empty',
                       inputValue: _addressLine2,
                     ),
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Address Line 3",
                       textFieldMaxLength: 30,
                       errorMessage: 'Address Line 1 cannot be empty',
@@ -157,27 +158,27 @@ class FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Company Name",
                       textFieldMaxLength: 30,
                       errorMessage: 'Company Name is Required',
                       inputValue: _billToCompanyName,
                       validationRequired: true,
                     ),
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Address Line 1",
                       textFieldMaxLength: 30,
                       errorMessage: 'Address Line 1 cannot be empty',
                       inputValue: _billToAddressLine1,
                       validationRequired: true,
                     ),
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Address Line 2",
                       textFieldMaxLength: 30,
                       errorMessage: 'Address Line 1 cannot be empty',
                       inputValue: _billToAddressLine2,
                     ),
-                    _buildTextField(
+                    FormSharedComponentWidget.buildTextField(
                       labelText: "Address Line 3",
                       textFieldMaxLength: 30,
                       errorMessage: 'Address Line 1 cannot be empty',
@@ -288,34 +289,6 @@ class FormScreenState extends State<FormScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildTextField({
-  String labelText,
-  int textFieldMaxLength,
-  String errorMessage,
-  Object inputValue,
-  bool validationRequired = false,
-  }) {
-    if(validationRequired){
-      return TextFormField(
-        decoration: InputDecoration(labelText: labelText),
-        maxLength: textFieldMaxLength,
-        validator: (String value) {
-          return value.isEmpty ? errorMessage : null;
-        },
-        onSaved: (String value) {
-          inputValue = value;
-        },
-      );
-    }
-    return TextFormField(
-      decoration: InputDecoration(labelText: labelText),
-      maxLength: textFieldMaxLength,
-      onSaved: (String value) {
-        inputValue = value;
-      },
     );
   }
 

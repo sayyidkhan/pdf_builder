@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:pdf_test/database/PdfForm.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
+import 'package:pdf_test/widget/ui/form/FormSharedComponentWidget.dart';
 
 class InvoiceDetailWidget extends StatefulWidget {
-
   @override
   _InvoiceDetailWidgetState createState() => _InvoiceDetailWidgetState();
 }
@@ -16,16 +16,17 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
 
   static var _invoiceNumber;
   String _dateOfIssue;
-  DateOfService _dateOfService= new DateOfService.empty();
+  DateOfService _dateOfService = new DateOfService.empty();
   TextEditingController _dateOfIssueTxtCtrl = new TextEditingController();
 
-  String getDateString(DateTime date) => "${date.day}/${date.month}/${date.year}";
+  String getDateString(DateTime date) =>
+      "${date.day}/${date.month}/${date.year}";
 
-  void setValueToController(TextEditingController controller,String text){
+  void setValueToController(TextEditingController controller, String text) {
     controller.text = text;
   }
 
-  DateTime getYear(int value){
+  DateTime getYear(int value) {
     return new DateTime(DateTime.now().year + value);
   }
 
@@ -39,11 +40,11 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         Column(
-          children: <Widget>[
-            _buildTextField(
+          children: [
+            FormSharedComponentWidget.buildTextField(
               labelText: "Invoice No",
               textFieldMaxLength: 10,
               errorMessage: 'Invoice Number is Required',
@@ -53,37 +54,12 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             _buildDateOfIssue(),
             _subHeaderTitle("Date Of Service"),
             _buildDateOfService(),
+            SizedBox(
+              height: 50,
+            )
           ],
         ),
       ],
-    );
-  }
-
-  Widget _buildTextField({
-    String labelText,
-    int textFieldMaxLength,
-    String errorMessage,
-    Object inputValue,
-    bool validationRequired = false,
-  }) {
-    if (validationRequired) {
-      return TextFormField(
-        decoration: InputDecoration(labelText: labelText),
-        maxLength: textFieldMaxLength,
-        validator: (String value) {
-          return value.isEmpty ? errorMessage : null;
-        },
-        onSaved: (String value) {
-          inputValue = value;
-        },
-      );
-    }
-    return TextFormField(
-      decoration: InputDecoration(labelText: labelText),
-      maxLength: textFieldMaxLength,
-      onSaved: (String value) {
-        inputValue = value;
-      },
     );
   }
 
@@ -102,9 +78,11 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             },
           ),
         ),
-        SizedBox(width: 10,),
+        SizedBox(
+          width: 10,
+        ),
         Padding(
-          padding: const EdgeInsets.only(left: 2,top: 20,right: 2),
+          padding: const EdgeInsets.only(left: 2, top: 20, right: 2),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -116,16 +94,16 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             child: FlatButton(
               textColor: Theme.of(context).primaryColor,
               onPressed: () {
-                DatePicker.showDatePicker(context,
+                DatePicker.showDatePicker(
+                  context,
                   showTitleActions: true,
                   minTime: minYear,
                   maxTime: maxYear,
-                  onChanged: (date) {
-                  },
+                  onChanged: (date) {},
                   onConfirm: (date) {
                     setState(() {
                       _dateOfIssue = getDateString(date);
-                      setValueToController(_dateOfIssueTxtCtrl,_dateOfIssue);
+                      setValueToController(_dateOfIssueTxtCtrl, _dateOfIssue);
                     });
                   },
                   currentTime: DateTime.now(),
@@ -137,7 +115,10 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
                   ),
                 );
               },
-              child: Text("Select Date",style: TextStyle(fontWeight: FontWeight.normal),),
+              child: Text(
+                "Select Date",
+                style: TextStyle(fontWeight: FontWeight.normal),
+              ),
             ),
           ),
         ),
@@ -147,12 +128,16 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
 
   Widget _subHeaderTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.only(top: 25,bottom: 5),
+      padding: const EdgeInsets.only(top: 25, bottom: 5),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
           title,
-          style: TextStyle(fontSize: 16.0,color: Colors.grey[600],fontWeight: FontWeight.w400,),
+          style: TextStyle(
+            fontSize: 16.0,
+            color: Colors.grey[600],
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ),
     );
@@ -173,7 +158,9 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             },
           ),
         ),
-        SizedBox(width: 10,),
+        SizedBox(
+          width: 10,
+        ),
         Expanded(
           child: TextFormField(
             controller: _dateOfService.lastDateTxtCtrl,
@@ -186,9 +173,11 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             },
           ),
         ),
-        SizedBox(width: 10,),
+        SizedBox(
+          width: 10,
+        ),
         Padding(
-          padding: const EdgeInsets.only(left: 2,top: 20,right: 2),
+          padding: const EdgeInsets.only(left: 2, top: 20, right: 2),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -200,10 +189,12 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             child: FlatButton(
               textColor: Theme.of(context).primaryColor,
               onPressed: () async {
-                final List<DateTime> picked = await DateRangePicker.showDatePicker(
+                final List<DateTime> picked =
+                    await DateRangePicker.showDatePicker(
                   context: context,
                   initialFirstDate: DateTime.now(),
-                  initialLastDate: (new DateTime.now()).add(new Duration(days: 7)),
+                  initialLastDate:
+                      (new DateTime.now()).add(new Duration(days: 7)),
                   firstDate: minYear,
                   lastDate: maxYear,
                 );
@@ -211,17 +202,21 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
                   String firstDate = getDateString(picked[0]);
                   String lastDate = getDateString(picked[1]);
                   setState(() {
-                    _dateOfService = new DateOfService(firstDate: firstDate, lastDate: lastDate);
+                    _dateOfService = new DateOfService(
+                        firstDate: firstDate, lastDate: lastDate);
                   });
-                }
-                else if (picked != null && picked.length == 1) {
+                } else if (picked != null && picked.length == 1) {
                   String firstDate = getDateString(picked[0]);
                   setState(() {
-                    _dateOfService = new DateOfService(firstDate: firstDate, lastDate: null);
+                    _dateOfService =
+                        new DateOfService(firstDate: firstDate, lastDate: null);
                   });
                 }
               },
-              child: Text("Select Date",style: TextStyle(fontWeight: FontWeight.normal),),
+              child: Text(
+                "Select Date",
+                style: TextStyle(fontWeight: FontWeight.normal),
+              ),
             ),
           ),
         ),
@@ -229,5 +224,3 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
     );
   }
 }
-
-

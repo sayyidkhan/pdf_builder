@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_test/database/PdfForm.dart';
+import 'package:pdf_test/widget/ui/form/ContractorDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceDetailWidget.dart';
 
 class NewFormScreen extends StatefulWidget {
@@ -31,8 +32,10 @@ class _NewFormScreenState extends State<NewFormScreen> {
     //first page
     list.add(InvoiceDetailWidget());
     //second page
-    list.add(InvoiceDetailWidget());
+    list.add(ContactorDetailWidget("","","",""));
     //third page
+    list.add(InvoiceDetailWidget());
+    //fourth page
     list.add(InvoiceDetailWidget());
     return list;
   }
@@ -56,9 +59,11 @@ class _NewFormScreenState extends State<NewFormScreen> {
             children: <Widget>[
               pagination(1, "Invoice"),
               paginationBlocks(),
-              pagination(2, "Contact"),
+              pagination(2, "Contactor"),
               paginationBlocks(),
-              pagination(3, "Item List"),
+              pagination(3, "Client"),
+              paginationBlocks(),
+              pagination(4, "Service"),
             ],
           ),
           const SizedBox(
@@ -75,26 +80,26 @@ class _NewFormScreenState extends State<NewFormScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey[500],
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              height: 40,
-              width: double.infinity,
-              child: FlatButton(
-                textColor: Theme.of(context).primaryColor,
-                onPressed: () {
-
-                },
-                child: Text("Next",style: TextStyle(fontWeight: FontWeight.normal),),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(30.0),
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       border: Border.all(
+          //         color: Colors.grey[500],
+          //       ),
+          //       borderRadius: BorderRadius.all(Radius.circular(20)),
+          //     ),
+          //     height: 40,
+          //     width: double.infinity,
+          //     child: FlatButton(
+          //       textColor: Theme.of(context).primaryColor,
+          //       onPressed: () {
+          //
+          //       },
+          //       child: Text("Next",style: TextStyle(fontWeight: FontWeight.normal),),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -113,7 +118,7 @@ class _NewFormScreenState extends State<NewFormScreen> {
         });
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5),
+        padding: const EdgeInsets.only(left: 7.5, right: 7.5),
         child: Column(children: [
           Container(
             width: 40,
@@ -129,8 +134,12 @@ class _NewFormScreenState extends State<NewFormScreen> {
             height: 5,
           ),
           Text(
-            "$title details",
-            style: TextStyle(fontSize: 12, fontWeight: textBold),
+            title,
+            style: TextStyle(fontSize: 12.5, fontWeight: textBold),
+          ),
+          Text(
+            "details",
+            style: TextStyle(fontSize: 12.5, fontWeight: textBold),
           ),
         ]),
       ),
@@ -139,7 +148,7 @@ class _NewFormScreenState extends State<NewFormScreen> {
 
   Widget paginationBlocks() {
     return Padding(
-      padding: const EdgeInsets.only(left: 2.5, right: 2.5, bottom: 15),
+      padding: const EdgeInsets.only(left: 7.5, right: 7.5, bottom: 28),
       child: Container(
         width: 10,
         height: 10,
