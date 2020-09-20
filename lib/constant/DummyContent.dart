@@ -173,10 +173,10 @@ class Content2 {
             widgets.Table.fromTextArray(
                 context: context,
                 data: [
-                  ["No","Service","Net Price","GST Rate","Total Gross"],
-                  ["1","Flutter Development","\$1000","-","\$1000"],
-                  ["2","Gatsby Development","\$500","-","\$500"],
-                  ["3","React Development","\$5000","-","\$5000"],
+                  ["No","Service","Total Price"],
+                  ["1","Flutter Development","\$1000"],
+                  ["2","Gatsby Development","\$500"],
+                  ["3","React Development","\$5000"],
                 ]
             ),
             widgets.SizedBox(height: 1.0 * PdfPageFormat.cm),
@@ -229,5 +229,6 @@ class Content2 {
     );
   }
 
-
 }
+
+
