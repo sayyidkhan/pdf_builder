@@ -4,6 +4,8 @@ import 'package:pdf_test/database/PdfForm.dart';
 import 'package:pdf_test/widget/ui/form/ClientDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/ContractorDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceDetailWidget.dart';
+import 'package:pdf_test/widget/ui/form/NewServiceDetailWidget.dart';
+import 'package:pdf_test/widget/ui/form/ServiceDetailsWidget.dart';
 
 class NewFormScreen extends StatefulWidget {
   static const routeName = '/createNewInvoice';
@@ -37,7 +39,7 @@ class _NewFormScreenState extends State<NewFormScreen> {
     //third page
     list.add(ClientDetailWidget("","","",""));
     //fourth page
-    list.add(InvoiceDetailWidget());
+    list.add(NewServiceDetailWidget());
     return list;
   }
 

@@ -22,7 +22,7 @@ class ClientDetailWidget extends StatelessWidget {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Bill To",
+              "Client Detail",
               textAlign: TextAlign.left,
               style: TextStyle(
                 decoration:TextDecoration.underline,
