@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_test/database/InvoiceDetail.dart';
+import 'package:pdf_test/database/PdfForm.dart';
 import 'package:pdf_test/widget/ui/sharedcomponents/DecimalTextInputFormatter.dart';
 import 'package:pdf_test/widget/ui/sharedcomponents/FormSharedComponentWidget.dart';
 
@@ -9,19 +9,19 @@ class NewServiceDetailWidget extends StatefulWidget {
 }
 
 class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
-  final List<ServiceDetail> serviceDetailList = new List();
+  final List<ServiceDetails> serviceDetailList = new List();
   final serviceIdCounter = 0;
   final double _gstRate = 0.00;
 
   @override
   void initState() {
     super.initState();
-    serviceDetailList.add(ServiceDetail("init", 0.00));
+    serviceDetailList.add(ServiceDetails("init", 0.00));
   }
 
   addServiceIntoList() {
     if (serviceDetailList.length < 5) {
-      serviceDetailList.add(new ServiceDetail("", 0.00));
+      serviceDetailList.add(new ServiceDetails("", 0.00));
     } else {
       final snackBar =
           SnackBar(content: Text('Cannot Add More Than 5 Services !'));
@@ -51,7 +51,7 @@ class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
     );
   }
 
-  Widget addServiceItem(int index, ServiceDetail serviceDetail) {
+  Widget addServiceItem(int index, ServiceDetails serviceDetail) {
     return Dismissible(
       key: Key(serviceDetail.serviceId.toString()),
       onDismissed: (direction) {

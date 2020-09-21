@@ -8,18 +8,16 @@ class InvoiceDetails {
   String invoiceNumber;
   String dateOfIssue;
   DateOfService dateOfService= new DateOfService.empty();
-  String email;
-  String password;
-  String url;
-  String phoneNumber;
-
 }
 
-class ContactDetails {
+class ContactorDetails {
   String yourCompanyName;
   String addressLine1;
   String addressLine2;
   String addressLine3;
+}
+
+class ClientDetails {
   String billToCompanyName;
   String billToAddressLine1;
   String billToAddressLine2;
@@ -27,18 +25,33 @@ class ContactDetails {
 }
 
 class ServiceDetails {
+  static int serviceIdCounter = 0;
+  int _serviceId;
+  String serviceName;
+  double nettPrice;
 
+  ServiceDetails(this.serviceName, this.nettPrice) {
+    _serviceId = incrementServiceIdCounter();
+  }
+
+  incrementServiceIdCounter() {
+    return serviceIdCounter += 1;
+  }
+
+  int get serviceId => _serviceId;
 }
 
 class OverallInvoice {
   InvoiceDetails invoiceDetails;
-  ContactDetails contactDetails;
-  ServiceDetails serviceDetails;
+  ContactorDetails contactorDetails;
+  ClientDetails clientDetails;
+  List<ServiceDetails> serviceDetails;
 
-  OverallInvoice(){
+  OverallInvoice() {
     invoiceDetails = new InvoiceDetails();
-    contactDetails = new ContactDetails();
-    serviceDetails = new ServiceDetails();
+    contactorDetails = new ContactorDetails();
+    clientDetails = new ClientDetails();
+    serviceDetails = new List();
   }
 
 }
