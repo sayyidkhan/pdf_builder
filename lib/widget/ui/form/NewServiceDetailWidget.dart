@@ -41,10 +41,7 @@ class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
           color: Colors.blueGrey[100],
           child: ListView.builder(
             itemCount: serviceDetailList.length,
-            itemBuilder: (BuildContext context, int index) => AbsorbPointer(
-                absorbing: serviceDetailList.length == 1,
-                child: addServiceItem(index, serviceDetailList[index]),
-            ),
+            itemBuilder: (BuildContext context, int index) => addServiceItem(index, serviceDetailList[index]),
           ),
         ),
         SizedBox(

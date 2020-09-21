@@ -51,9 +51,9 @@ class _NewFormScreenState extends State<NewFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Create a New Invoice")),
-      body: Column(
+      body: ListView(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -69,18 +69,14 @@ class _NewFormScreenState extends State<NewFormScreen> {
               pagination(4, "Service"),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(
-                left: 30,
-                right: 30,
-              ),
-              child: Center(
-                child: accessPageDetail(currentPagination - 1),
-              ),
+          Container(
+            height: 420,
+            padding: const EdgeInsets.only(
+              left: 30,
+              right: 30,
+            ),
+            child: Center(
+              child: accessPageDetail(currentPagination - 1),
             ),
           ),
           backAndNextButton(context),
@@ -99,20 +95,20 @@ class _NewFormScreenState extends State<NewFormScreen> {
               border: Border.all(
                 color: Colors.grey[500],
               ),
-              color: Colors.red[700],
+              color: currentPagination != 1 ? Colors.red[700] : Colors.grey[500],
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             height: 40,
             width: double.infinity,
             child: FlatButton(
               textColor: Colors.white,
-              onPressed: () {
-                if (currentPagination != 1) {
+              onPressed: currentPagination != 1 ? () {
                   setState(() {
                     currentPagination--;
                   });
-                }
-              },
+              }
+              :
+              null,
               child: Text(
                 "Back",
                 style: TextStyle(fontWeight: FontWeight.normal),
@@ -157,11 +153,13 @@ class _NewFormScreenState extends State<NewFormScreen> {
 
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30, bottom: 25),
-      child: Row(
-        children: [
-          backButton(),
-          nextButton(),
-        ],
+      child: Container(
+        child: Row(
+          children: [
+            backButton(),
+            nextButton(),
+          ],
+        ),
       ),
     );
   }

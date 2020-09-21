@@ -40,7 +40,7 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 0),
