@@ -4,16 +4,15 @@ import 'package:pdf_test/database/PdfForm.dart';
 import 'package:pdf_test/widget/ui/form/ClientDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/ContractorDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceDetailWidget.dart';
-import 'package:pdf_test/widget/ui/form/NewServiceDetailWidget.dart';
-import 'package:pdf_test/widget/ui/form/ServiceDetailsWidget.dart';
+import 'package:pdf_test/widget/ui/form/ServiceDetailWidget.dart';
 
-class NewFormScreen extends StatefulWidget {
+class FormScreen extends StatefulWidget {
   static const routeName = '/createNewInvoice';
   @override
-  _NewFormScreenState createState() => _NewFormScreenState();
+  _FormScreenState createState() => _FormScreenState();
 }
 
-class _NewFormScreenState extends State<NewFormScreen> {
+class _FormScreenState extends State<FormScreen> {
   final List<Widget> list = new List();
   int currentPagination = 1;
   OverallInvoice overallInvoice;

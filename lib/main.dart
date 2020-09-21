@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pdf_test/screen/NewFormScreen.dart';
+import 'package:pdf_test/screen/FormScreen.dart';
 import 'package:pdf_test/widget/ui/pdfbuilder/InvoiceOverviewWidget.dart';
 
 
@@ -17,8 +17,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
         routes: {
-//        FormScreen.routeName : (ctx) => FormScreen(),
-        NewFormScreen.routeName : (ctx) => NewFormScreen(),
+        FormScreen.routeName : (ctx) => FormScreen(),
         },
     );
   }
@@ -52,7 +51,7 @@ class MyHomePage extends StatelessWidget {
           icon: const Icon(Icons.add),
           tooltip: 'Add New Invoice',
           onPressed: () {
-            Navigator.pushNamed( context,  NewFormScreen.routeName );
+            Navigator.pushNamed( context,  FormScreen.routeName );
           }
         ),
       ),
