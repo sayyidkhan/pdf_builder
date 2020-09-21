@@ -86,6 +86,38 @@ class _NewFormScreenState extends State<NewFormScreen> {
   }
 
   Widget backAndNextButton(BuildContext context) {
+    showAlertDialog() {
+      // set up the buttons
+      Widget cancelButton = FlatButton(
+        child: Text("Cancel"),
+        onPressed:  () {
+          Navigator.of(context).pop();
+        },
+      );
+      Widget continueButton = FlatButton(
+        child: Text("Proceed"),
+        onPressed:  () {},
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("Confirm"),
+        content: Text("Would you like to confirm all the information entered?"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
     Expanded backButton() {
       return Expanded(
         child: Padding(
@@ -140,9 +172,12 @@ class _NewFormScreenState extends State<NewFormScreen> {
                     currentPagination++;
                   });
                 }
+                else if(currentPagination == list.length){
+                  showAlertDialog();
+                }
               },
               child: Text(
-                "Next",
+                currentPagination == list.length ? "Proceed" : "Next",
                 style: TextStyle(fontWeight: FontWeight.normal),
               ),
             ),
