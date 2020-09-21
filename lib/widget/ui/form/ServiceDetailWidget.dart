@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_test/IOopertions/InvoiceDetail.dart';
+import 'package:pdf_test/database/InvoiceDetail.dart';
 import 'package:pdf_test/widget/ui/sharedcomponents/DecimalTextInputFormatter.dart';
 import 'package:pdf_test/widget/ui/sharedcomponents/FormSharedComponentWidget.dart';
 
