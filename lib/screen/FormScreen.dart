@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_test/database/PdfForm.dart';
-import 'package:pdf_test/widget/ui/form/ClientDetailWidget.dart';
-import 'package:pdf_test/widget/ui/form/ContractorDetailWidget.dart';
+import 'package:pdf_test/widget/ui/form/BillingDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/ServiceDetailWidget.dart';
 
@@ -34,9 +33,9 @@ class _FormScreenState extends State<FormScreen> {
     //first page
     list.add(InvoiceDetailWidget(overallInvoice.invoiceDetails));
     //second page
-    list.add(ContactorDetailWidget(overallInvoice.contactorDetails));
+    list.add(BillingWidget(overallInvoice.contractorDetails));
     //third page
-    list.add(ClientDetailWidget(overallInvoice.clientDetails));
+    list.add(BillingWidget(overallInvoice.clientDetails));
     //fourth page
     list.add(ServiceDetailWidget(overallInvoice.serviceDetails));
     return list;
@@ -173,6 +172,8 @@ class _FormScreenState extends State<FormScreen> {
                 }
                 else if(currentPagination == list.length){
                   showAlertDialog();
+                  //print data to verify its content
+                  overallInvoice.printContent();
                 }
               },
               child: Text(

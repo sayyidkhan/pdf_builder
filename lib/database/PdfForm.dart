@@ -12,49 +12,39 @@ class InvoiceDetails {
   DateOfService dateOfService= new DateOfService.empty();
 
   printContent() {
-    print("invoice number: " + invoiceNumber);
+    print("invoice number: " + invoiceNumber.toString());
     dateOfIssue.printContent();
     dateOfService.printContent();
   }
 
 }
 
-class ContactorDetails {
-  TextEditingController yourCompanyNameTxtCtrl = new TextEditingController();
+class BillingDetails {
+  TextEditingController companyNameTxtCtrl = new TextEditingController();
   TextEditingController addressLine1TxtCtrl = new TextEditingController();
   TextEditingController addressLine2TxtCtrl = new TextEditingController();
   TextEditingController addressLine3TxtCtrl = new TextEditingController();
 
-  String yourCompanyName;
+  String companyName;
   String addressLine1;
   String addressLine2;
   String addressLine3;
 
-  printContent() {
-    print("my company name: " + yourCompanyName);
-    print("my address 1: " + addressLine1);
-    print("my address 2: " + addressLine1);
-    print("my address 3: " + addressLine1);
-  }
+  printContent(int number) {
+    if(number == 0 || number == 1){
+      //personal details
+      if(number == 0){
+        print("my company name: " + companyName.toString());
+      }
+      //client details
+      else if(number == 1){
+        print("billing company name: " + companyName.toString());
+      }
+      print("billing address 1: " + addressLine1.toString());
+      print("billing address 2: " + addressLine2.toString());
+      print("billing address 3: " + addressLine3.toString());
+    }
 
-}
-
-class ClientDetails {
-  TextEditingController billToCompanyNameTxtCtrl = new TextEditingController();
-  TextEditingController billToAddressLine1TxtCtrl = new TextEditingController();
-  TextEditingController billToAddressLine2TxtCtrl = new TextEditingController();
-  TextEditingController billToAddressLine3TxtCtrl = new TextEditingController();
-
-  String billToCompanyName;
-  String billToAddressLine1;
-  String billToAddressLine2;
-  String billToAddressLine3;
-
-  printContent() {
-    print("billing company name: " + billToCompanyName);
-    print("billing address 1: " + billToAddressLine1);
-    print("billing address 2: " + billToAddressLine2);
-    print("billing address 3: " + billToAddressLine3);
   }
 
 }
@@ -88,14 +78,14 @@ class ServiceDetails {
 
 class OverallInvoice {
   InvoiceDetails invoiceDetails;
-  ContactorDetails contactorDetails;
-  ClientDetails clientDetails;
+  BillingDetails contractorDetails;
+  BillingDetails clientDetails;
   List<ServiceDetails> serviceDetails;
 
   OverallInvoice() {
     invoiceDetails = new InvoiceDetails();
-    contactorDetails = new ContactorDetails();
-    clientDetails = new ClientDetails();
+    contractorDetails = new BillingDetails();
+    clientDetails = new BillingDetails();
     serviceDetails = new List();
 
     serviceDetails.add(ServiceDetails("init", "0.00"));
@@ -112,8 +102,8 @@ class OverallInvoice {
     }
 
     invoiceDetails.printContent();
-    contactorDetails.printContent();
-    clientDetails.printContent();
+    contractorDetails.printContent(0);
+    clientDetails.printContent(1);
     _getAllServiceDetailsToPrint();
   }
 
@@ -134,7 +124,7 @@ class DateOfIssue {
 
   printContent() {
     print("--- date of issue ---");
-    print("date of issue: " + doi);
+    print("date of issue: " + doi.toString());
   }
 
 }
@@ -158,8 +148,8 @@ class DateOfService {
 
   printContent() {
     print("--- date of service ---");
-    print("first date: " + firstDate);
-    print("last date: " + lastDate);
+    print("first date: " + firstDate.toString());
+    print("last date: " + lastDate.toString());
   }
 
 }
