@@ -14,6 +14,11 @@ class InvoiceDetails {
 }
 
 class ContactorDetails {
+  TextEditingController yourCompanyNameTxtCtrl = new TextEditingController();
+  TextEditingController addressLine1TxtCtrl = new TextEditingController();
+  TextEditingController addressLine2TxtCtrl = new TextEditingController();
+  TextEditingController addressLine3TxtCtrl = new TextEditingController();
+
   String yourCompanyName;
   String addressLine1;
   String addressLine2;

@@ -34,7 +34,7 @@ class _FormScreenState extends State<FormScreen> {
     //first page
     list.add(InvoiceDetailWidget(overallInvoice.invoiceDetails));
     //second page
-    list.add(ContactorDetailWidget("", "", "", ""));
+    list.add(ContactorDetailWidget(overallInvoice.contactorDetails));
     //third page
     list.add(ClientDetailWidget("","","",""));
     //fourth page
@@ -174,11 +174,6 @@ class _FormScreenState extends State<FormScreen> {
                 else if(currentPagination == list.length){
                   showAlertDialog();
                 }
-                InvoiceDetails invoiceDetails = overallInvoice.invoiceDetails;
-                print("invoice details: ${invoiceDetails.invoiceNumber.toString()}");
-                print("date of issue: " + invoiceDetails.dateOfIssue.doi);
-                print("date of service (from): " + invoiceDetails.dateOfService.firstDate);
-                print("date of service (to): " + invoiceDetails.dateOfService.lastDate);
               },
               child: Text(
                 currentPagination == list.length ? "Proceed" : "Next",

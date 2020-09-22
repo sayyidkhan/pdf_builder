@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:pdf_test/database/PdfForm.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
-import 'package:pdf_test/widget/ui/sharedcomponents/FormSharedComponentWidget.dart';
 
 class InvoiceDetailWidget extends StatefulWidget {
   final InvoiceDetails invoiceDetails;

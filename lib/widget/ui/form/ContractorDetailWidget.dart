@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pdf_test/widget/ui/sharedcomponents/FormSharedComponentWidget.dart';
+import 'package:pdf_test/database/PdfForm.dart';
 
 class ContactorDetailWidget extends StatelessWidget {
-  ContactorDetailWidget(
-      this._yourCompanyName,
-      this._addressLine1,
-      this._addressLine2,
-      this._addressLine3);
+  final ContactorDetails contactorDetails;
 
-  final String _yourCompanyName;
-  final String _addressLine1;
-  final String _addressLine2;
-  final String _addressLine3;
+  ContactorDetailWidget(this.contactorDetails);
 
   @override
   Widget build(BuildContext context) {
@@ -34,34 +27,51 @@ class ContactorDetailWidget extends StatelessWidget {
             ),
           ),
         ),
-        FormSharedComponentWidget.buildTextField(
-          labelText: "Company Name",
-          textFieldMaxLength: 30,
-          errorMessage: 'Company Name is Required',
-          inputValue: _yourCompanyName,
-          // validationRequired: true,
+        TextFormField(
+          controller: contactorDetails.yourCompanyNameTxtCtrl,
+          maxLength: 30,
+          decoration: InputDecoration(labelText: "Company Name"),
+          validator: (String value) {
+            return value.isEmpty ? 'Company Name is Required' : null;
+          },
+          onSaved: (String value) {
+            contactorDetails.yourCompanyName = value;
+            contactorDetails.yourCompanyNameTxtCtrl.text = contactorDetails.yourCompanyName;
+          },
         ),
-        FormSharedComponentWidget.buildTextField(
-          labelText: "Address Line 1",
-          textFieldMaxLength: 30,
-          errorMessage: 'Address Line 1 cannot be empty',
-          inputValue: _addressLine1,
-          // validationRequired: true,
+        TextFormField(
+          controller: contactorDetails.addressLine1TxtCtrl,
+          maxLength: 30,
+          decoration: InputDecoration(labelText: "Address Line 1"),
+          validator: (String value) {
+            return value.isEmpty ? 'Address Line 1 cannot be empty' : null;
+          },
+          onSaved: (String value) {
+            contactorDetails.addressLine1 = value;
+            contactorDetails.addressLine1TxtCtrl.text = contactorDetails.addressLine1;
+          },
         ),
-        FormSharedComponentWidget.buildTextField(
-          labelText: "Address Line 2",
-          textFieldMaxLength: 30,
-          errorMessage: 'Address Line 1 cannot be empty',
-          inputValue: _addressLine2,
+        TextFormField(
+          controller: contactorDetails.addressLine2TxtCtrl,
+          maxLength: 30,
+          decoration: InputDecoration(labelText: "Address Line 2"),
+          onSaved: (String value) {
+            contactorDetails.addressLine2 = value;
+            contactorDetails.addressLine2TxtCtrl.text = contactorDetails.addressLine2;
+          },
         ),
-        FormSharedComponentWidget.buildTextField(
-          labelText: "Address Line 3",
-          textFieldMaxLength: 30,
-          errorMessage: 'Address Line 1 cannot be empty',
-          inputValue: _addressLine3,
+        TextFormField(
+          controller: contactorDetails.addressLine3TxtCtrl,
+          maxLength: 30,
+          decoration: InputDecoration(labelText: "Address Line 3"),
+          onSaved: (String value) {
+            contactorDetails.addressLine3 = value;
+            contactorDetails.addressLine3TxtCtrl.text = contactorDetails.addressLine3;
+          },
         ),
       ],
     );
   }
+
 
 }
