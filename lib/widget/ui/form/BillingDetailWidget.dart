@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pdf_test/database/PdfForm.dart';
 
+//for the contractor & client details
 class BillingWidget extends StatelessWidget {
   final formKey = new GlobalKey<FormState>();
   BillingWidget(this.billingDetails);
