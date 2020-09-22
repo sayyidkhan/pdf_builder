@@ -1,27 +1,32 @@
+import 'dart:wasm';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pdf_test/database/PdfForm.dart';
 import 'package:pdf_test/widget/ui/sharedcomponents/DecimalTextInputFormatter.dart';
-import 'package:pdf_test/widget/ui/sharedcomponents/FormSharedComponentWidget.dart';
 
-class NewServiceDetailWidget extends StatefulWidget {
+class ServiceDetailWidget extends StatefulWidget {
+  final List<ServiceDetails> serviceDetails;
+
   @override
-  _NewServiceDetailWidgetState createState() => _NewServiceDetailWidgetState();
+  _ServiceDetailWidgetState createState() => _ServiceDetailWidgetState();
+
+  ServiceDetailWidget(this.serviceDetails);
 }
 
-class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
-  final List<ServiceDetails> serviceDetailList = new List();
+class _ServiceDetailWidgetState extends State<ServiceDetailWidget> {
+  final formKey = new GlobalKey<FormState>();
   final serviceIdCounter = 0;
   final double _gstRate = 0.00;
 
   @override
   void initState() {
     super.initState();
-    serviceDetailList.add(ServiceDetails("init", 0.00));
   }
 
   addServiceIntoList() {
-    if (serviceDetailList.length < 5) {
-      serviceDetailList.add(new ServiceDetails("", 0.00));
+    if (widget.serviceDetails.length < 5) {
+      widget.serviceDetails.add(new ServiceDetails("", "0.00"));
     } else {
       final snackBar =
           SnackBar(content: Text('Cannot Add More Than 5 Services !'));
@@ -31,51 +36,57 @@ class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        titleWithAddButton(),
-        Container(
-          padding: EdgeInsets.only(left: 15, right: 15),
-          margin: EdgeInsets.only(top: 15),
-          height: 340,
-          color: Colors.blueGrey[100],
-          child: serviceDetailList.length == 0
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "No Service List To Display",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Click on Plus Icon (+) to add new services",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+    return Form(
+      key: formKey,
+      onChanged: () {
+        formKey.currentState.save();
+      },
+      child: Column(
+        children: [
+          titleWithAddButton(),
+          Container(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            margin: EdgeInsets.only(top: 15),
+            height: 340,
+            color: Colors.blueGrey[100],
+            child: widget.serviceDetails.length == 0
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "No Service List To Display",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Click on Plus Icon (+) to add new services",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: widget.serviceDetails.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        addServiceItem(index, widget.serviceDetails[index]),
                   ),
-                )
-              : ListView.builder(
-                  itemCount: serviceDetailList.length,
-                  itemBuilder: (BuildContext context, int index) =>
-                      addServiceItem(index, serviceDetailList[index]),
-                ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
     );
   }
 
@@ -84,7 +95,7 @@ class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
       key: Key(serviceDetail.serviceId.toString()),
       onDismissed: (direction) {
         setState(() {
-          serviceDetailList.removeAt(index);
+          widget.serviceDetails.removeAt(index);
         });
       },
       child: Row(
@@ -108,49 +119,58 @@ class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
           ),
           Expanded(
             flex: 2,
-            child: FormSharedComponentWidget.buildTextField(
-              labelText: "Service Name",
-              textFieldMaxLength: 20,
-              errorMessage: 'Service Name is Required',
-              inputValue: serviceDetail.serviceName,
-              // validationRequired: true,
+            child:
+            TextFormField(
+              controller: serviceDetail.serviceNameTxtCtrl,
+              maxLength: 20,
+              decoration: InputDecoration(labelText: "Service Name"),
+              validator: (String value) {
+                return value.isEmpty ? 'Service Name ${(index + 1).toString()} is Required' : null;
+              },
+              onSaved: (String value) {
+                serviceDetail.serviceName = value;
+                serviceDetail.serviceNameTxtCtrl.text = serviceDetail.serviceName;
+              },
             ),
           ),
           SizedBox(
             width: 10,
           ),
+
           Expanded(
-            child: buildPriceField(
-              labelText: "Price",
-              errorMessage: 'Price Field Cannot Be Empty',
-              inputValue: serviceDetail.nettPrice,
-              validationRequired: true,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 22.5),
+              child: TextFormField(
+                  controller: serviceDetail.nettPriceTxtCtrl,
+                  inputFormatters: [
+                     FilteringTextInputFormatter.allow(RegExp('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$')),
+                  ],
+                  decoration: InputDecoration(labelText: "Price"),
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  onSaved: (String value) {
+                    //only parse when the value is valid to parse
+                    serviceDetail.nettPrice = value;
+                    serviceDetail.nettPriceTxtCtrl.text = serviceDetail.nettPrice;
+                }
+              ),
             ),
           ),
+          // Expanded(
+          //   child: Padding(
+          //   padding: const EdgeInsets.only(bottom: 22.5),
+          //   child: TextFormField(
+          //   controller: serviceDetail.nettPriceTxtCtrl,
+          //   decoration: InputDecoration(labelText: "Price"),
+          //   inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
+          //   keyboardType: TextInputType.numberWithOptions(decimal: true),
+          //   onSaved: (String value) {
+          //   serviceDetail.nettPrice = double.parse(value);
+          //   serviceDetail.nettPriceTxtCtrl.text = serviceDetail.nettPrice.toString();
+          //   },
+          //   ),
+          //   ),
+          // ),
         ],
-      ),
-    );
-  }
-
-  Widget buildPriceField({
-    String labelText,
-    String errorMessage,
-    Object inputValue,
-    bool validationRequired = false,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 22.5),
-      child: TextFormField(
-        initialValue: "0.00",
-        decoration: InputDecoration(labelText: labelText),
-        inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
-        onSaved: (String value) {
-          if (validationRequired) {
-            return value.isEmpty ? errorMessage : null;
-          }
-          inputValue = value;
-        },
       ),
     );
   }

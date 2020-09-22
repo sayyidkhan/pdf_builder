@@ -38,12 +38,6 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
       key: formKey,
       onChanged: () {
         formKey.currentState.save();
-        InvoiceDetails invoiceDetails = widget.invoiceDetails;
-        print("invoice details: ${invoiceDetails.invoiceNumber}");
-        print("date of issue: " + invoiceDetails.dateOfIssue.doi);
-        print("date of service (from): " +
-            invoiceDetails.dateOfService.firstDate);
-        print("date of service (to): " + invoiceDetails.dateOfService.lastDate);
       },
       child: Column(
         children: [

@@ -38,7 +38,7 @@ class _FormScreenState extends State<FormScreen> {
     //third page
     list.add(ClientDetailWidget(overallInvoice.clientDetails));
     //fourth page
-    list.add(NewServiceDetailWidget());
+    list.add(ServiceDetailWidget(overallInvoice.serviceDetails));
     return list;
   }
 
@@ -85,7 +85,7 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Widget backAndNextButton(BuildContext context) {
-    showAlertDialog() {
+      showAlertDialog() {
       // set up the buttons
       Widget cancelButton = FlatButton(
         child: Text("Cancel"),

@@ -11,6 +11,12 @@ class InvoiceDetails {
   DateOfIssue dateOfIssue = new DateOfIssue.empty();
   DateOfService dateOfService= new DateOfService.empty();
 
+  printContent() {
+    print("invoice number: " + invoiceNumber);
+    dateOfIssue.printContent();
+    dateOfService.printContent();
+  }
+
 }
 
 class ContactorDetails {
@@ -23,6 +29,14 @@ class ContactorDetails {
   String addressLine1;
   String addressLine2;
   String addressLine3;
+
+  printContent() {
+    print("my company name: " + yourCompanyName);
+    print("my address 1: " + addressLine1);
+    print("my address 2: " + addressLine1);
+    print("my address 3: " + addressLine1);
+  }
+
 }
 
 class ClientDetails {
@@ -35,16 +49,28 @@ class ClientDetails {
   String billToAddressLine1;
   String billToAddressLine2;
   String billToAddressLine3;
+
+  printContent() {
+    print("billing company name: " + billToCompanyName);
+    print("billing address 1: " + billToAddressLine1);
+    print("billing address 2: " + billToAddressLine2);
+    print("billing address 3: " + billToAddressLine3);
+  }
+
 }
 
 class ServiceDetails {
+  TextEditingController serviceNameTxtCtrl = new TextEditingController();
+  TextEditingController nettPriceTxtCtrl = new TextEditingController();
+
   static int serviceIdCounter = 0;
   int _serviceId;
   String serviceName;
-  double nettPrice;
+  String nettPrice = "0.00";
 
   ServiceDetails(this.serviceName, this.nettPrice) {
     _serviceId = incrementServiceIdCounter();
+    nettPriceTxtCtrl.text = "0.00";
   }
 
   incrementServiceIdCounter() {
@@ -52,6 +78,12 @@ class ServiceDetails {
   }
 
   int get serviceId => _serviceId;
+
+  printContent() {
+    print("service name: " + serviceName);
+    print("nett price: " + nettPrice);
+  }
+
 }
 
 class OverallInvoice {
@@ -65,6 +97,24 @@ class OverallInvoice {
     contactorDetails = new ContactorDetails();
     clientDetails = new ClientDetails();
     serviceDetails = new List();
+
+    serviceDetails.add(ServiceDetails("init", "0.00"));
+  }
+
+  void printContent() {
+    _getAllServiceDetailsToPrint(){
+      int counter = 0;
+      serviceDetails.forEach((element) {
+        counter = counter + 1;
+        print("service detail $counter");
+        element.printContent();
+      });
+    }
+
+    invoiceDetails.printContent();
+    contactorDetails.printContent();
+    clientDetails.printContent();
+    _getAllServiceDetailsToPrint();
   }
 
 }
@@ -80,6 +130,11 @@ class DateOfIssue {
 
   DateOfIssue({this.doi}){
     dateOfIssueCtrl.text = this.doi;
+  }
+
+  printContent() {
+    print("--- date of issue ---");
+    print("date of issue: " + doi);
   }
 
 }
@@ -99,6 +154,12 @@ class DateOfService {
   DateOfService({this.firstDate, this.lastDate}){
     firstDateTxtCtrl.text = this.firstDate;
     lastDateTxtCtrl.text = this.lastDate;
+  }
+
+  printContent() {
+    print("--- date of service ---");
+    print("first date: " + firstDate);
+    print("last date: " + lastDate);
   }
 
 }
