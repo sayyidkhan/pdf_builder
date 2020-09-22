@@ -30,7 +30,7 @@ class ContactorDetailWidget extends StatelessWidget {
         TextFormField(
           controller: contactorDetails.yourCompanyNameTxtCtrl,
           maxLength: 30,
-          decoration: InputDecoration(labelText: "Company Name"),
+          decoration: InputDecoration(labelText: "Your Company Name"),
           validator: (String value) {
             return value.isEmpty ? 'Company Name is Required' : null;
           },

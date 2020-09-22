@@ -26,6 +26,11 @@ class ContactorDetails {
 }
 
 class ClientDetails {
+  TextEditingController billToCompanyNameTxtCtrl = new TextEditingController();
+  TextEditingController billToAddressLine1TxtCtrl = new TextEditingController();
+  TextEditingController billToAddressLine2TxtCtrl = new TextEditingController();
+  TextEditingController billToAddressLine3TxtCtrl = new TextEditingController();
+
   String billToCompanyName;
   String billToAddressLine1;
   String billToAddressLine2;

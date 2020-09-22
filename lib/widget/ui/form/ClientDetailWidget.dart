@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pdf_test/database/PdfForm.dart';
 import 'package:pdf_test/widget/ui/sharedcomponents/FormSharedComponentWidget.dart';
 
 class ClientDetailWidget extends StatelessWidget {
-  ClientDetailWidget(
-      this._billToCompanyName,
-      this._billToAddressLine1,
-      this._billToAddressLine2,
-      this._billToAddressLine3);
+  ClientDetailWidget(this.clientDetails);
 
-  final String _billToCompanyName;
-  final String _billToAddressLine1;
-  final String _billToAddressLine2;
-  final String _billToAddressLine3;
+  final ClientDetails clientDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -33,31 +27,47 @@ class ClientDetailWidget extends StatelessWidget {
             ),
           ),
         ),
-        FormSharedComponentWidget.buildTextField(
-          labelText: "Company Name",
-          textFieldMaxLength: 30,
-          errorMessage: 'Company Name is Required',
-          inputValue: _billToCompanyName,
-          // validationRequired: true,
+        TextFormField(
+          controller: clientDetails.billToCompanyNameTxtCtrl,
+          maxLength: 30,
+          decoration: InputDecoration(labelText: "Billing Company Name"),
+          validator: (String value) {
+            return value.isEmpty ? 'Company Name is Required' : null;
+          },
+          onSaved: (String value) {
+            clientDetails.billToCompanyName = value;
+            clientDetails.billToCompanyNameTxtCtrl.text = clientDetails.billToCompanyName;
+          },
         ),
-        FormSharedComponentWidget.buildTextField(
-          labelText: "Address Line 1",
-          textFieldMaxLength: 30,
-          errorMessage: 'Address Line 1 cannot be empty',
-          inputValue: _billToAddressLine1,
-          // validationRequired: true,
+        TextFormField(
+          controller: clientDetails.billToAddressLine1TxtCtrl,
+          maxLength: 30,
+          decoration: InputDecoration(labelText: "Address Line 1"),
+          validator: (String value) {
+            return value.isEmpty ? 'Address Line 1 cannot be empty' : null;
+          },
+          onSaved: (String value) {
+            clientDetails.billToAddressLine1 = value;
+            clientDetails.billToAddressLine1TxtCtrl.text = clientDetails.billToAddressLine1;
+          },
         ),
-        FormSharedComponentWidget.buildTextField(
-          labelText: "Address Line 2",
-          textFieldMaxLength: 30,
-          errorMessage: 'Address Line 1 cannot be empty',
-          inputValue: _billToAddressLine2,
+        TextFormField(
+          controller: clientDetails.billToAddressLine2TxtCtrl,
+          maxLength: 30,
+          decoration: InputDecoration(labelText: "Address Line 2"),
+          onSaved: (String value) {
+            clientDetails.billToAddressLine2 = value;
+            clientDetails.billToAddressLine2TxtCtrl.text = clientDetails.billToAddressLine2;
+          },
         ),
-        FormSharedComponentWidget.buildTextField(
-          labelText: "Address Line 3",
-          textFieldMaxLength: 30,
-          errorMessage: 'Address Line 1 cannot be empty',
-          inputValue: _billToAddressLine3,
+        TextFormField(
+          controller: clientDetails.billToAddressLine3TxtCtrl,
+          maxLength: 30,
+          decoration: InputDecoration(labelText: "Address Line 3"),
+          onSaved: (String value) {
+            clientDetails.billToAddressLine3 = value;
+            clientDetails.billToAddressLine3TxtCtrl.text = clientDetails.billToAddressLine3;
+          },
         ),
       ],
     );

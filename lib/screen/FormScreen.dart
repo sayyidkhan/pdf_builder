@@ -36,7 +36,7 @@ class _FormScreenState extends State<FormScreen> {
     //second page
     list.add(ContactorDetailWidget(overallInvoice.contactorDetails));
     //third page
-    list.add(ClientDetailWidget("","","",""));
+    list.add(ClientDetailWidget(overallInvoice.clientDetails));
     //fourth page
     list.add(NewServiceDetailWidget());
     return list;
