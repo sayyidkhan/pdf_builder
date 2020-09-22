@@ -20,8 +20,8 @@ class _FormScreenState extends State<FormScreen> {
   @override
   void initState() {
     super.initState();
-    initPageDetail();
     overallInvoice = new OverallInvoice();
+    initPageDetail();
   }
 
   @override
@@ -32,7 +32,7 @@ class _FormScreenState extends State<FormScreen> {
 
   List<Widget> initPageDetail() {
     //first page
-    list.add(InvoiceDetailWidget());
+    list.add(InvoiceDetailWidget(overallInvoice.invoiceDetails));
     //second page
     list.add(ContactorDetailWidget("", "", "", ""));
     //third page
@@ -174,6 +174,11 @@ class _FormScreenState extends State<FormScreen> {
                 else if(currentPagination == list.length){
                   showAlertDialog();
                 }
+                InvoiceDetails invoiceDetails = overallInvoice.invoiceDetails;
+                print("invoice details: ${invoiceDetails.invoiceNumber.toString()}");
+                print("date of issue: " + invoiceDetails.dateOfIssue.doi);
+                print("date of service (from): " + invoiceDetails.dateOfService.firstDate);
+                print("date of service (to): " + invoiceDetails.dateOfService.lastDate);
               },
               child: Text(
                 currentPagination == list.length ? "Proceed" : "Next",

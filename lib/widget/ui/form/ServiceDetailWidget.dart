@@ -85,7 +85,7 @@ class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
               textFieldMaxLength: 20,
               errorMessage: 'Service Name is Required',
               inputValue: serviceDetail.serviceName,
-              validationRequired: true,
+              // validationRequired: true,
             ),
           ),
           SizedBox(

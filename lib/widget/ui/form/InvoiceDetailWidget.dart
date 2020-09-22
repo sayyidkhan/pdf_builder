@@ -5,26 +5,21 @@ import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:pdf_test/widget/ui/sharedcomponents/FormSharedComponentWidget.dart';
 
 class InvoiceDetailWidget extends StatefulWidget {
+  final InvoiceDetails invoiceDetails;
+  InvoiceDetailWidget(this.invoiceDetails);
+
   @override
   _InvoiceDetailWidgetState createState() => _InvoiceDetailWidgetState();
 }
 
 class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
+  final formKey = new GlobalKey<FormState>();
   //date range
   static DateTime minYear;
   static DateTime maxYear;
 
-  static var _invoiceNumber;
-  String _dateOfIssue;
-  DateOfService _dateOfService = new DateOfService.empty();
-  TextEditingController _dateOfIssueTxtCtrl = new TextEditingController();
-
   String getDateString(DateTime date) =>
       "${date.day}/${date.month}/${date.year}";
-
-  void setValueToController(TextEditingController controller, String text) {
-    controller.text = text;
-  }
 
   DateTime getYear(int value) {
     return new DateTime(DateTime.now().year + value);
@@ -40,42 +35,59 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20, bottom: 0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Invoice Details",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: Colors.grey.shade700,
+    return Form(
+      key: formKey,
+      onChanged: () {
+        formKey.currentState.save();
+        InvoiceDetails invoiceDetails = widget.invoiceDetails;
+        print("invoice details: ${invoiceDetails.invoiceNumber}");
+        print("date of issue: " + invoiceDetails.dateOfIssue.doi);
+        print("date of service (from): " +
+            invoiceDetails.dateOfService.firstDate);
+        print("date of service (to): " + invoiceDetails.dateOfService.lastDate);
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Invoice Details",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.grey.shade700,
+                ),
               ),
             ),
           ),
-        ),
-        Column(
-          children: [
-            FormSharedComponentWidget.buildTextField(
-              labelText: "Invoice No",
-              textFieldMaxLength: 10,
-              errorMessage: 'Invoice Number is Required',
-              inputValue: _invoiceNumber,
-              validationRequired: true,
-            ),
-            _buildDateOfIssue(),
-            _subHeaderTitle("Date Of Service"),
-            _buildDateOfService(),
-            SizedBox(
-              height: 50,
-            )
-          ],
-        ),
-      ],
+          Column(
+            children: [
+              TextFormField(
+                controller: widget.invoiceDetails.invoiceNoTxtCtrl,
+                maxLength: 10,
+                decoration: InputDecoration(labelText: "Invoice No"),
+                validator: (String value) {
+                  return value.isEmpty ? 'Invoice Number is Required' : null;
+                },
+                onSaved: (String value) {
+                  widget.invoiceDetails.invoiceNumber = value;
+                  widget.invoiceDetails.invoiceNoTxtCtrl.text = widget.invoiceDetails.invoiceNumber;
+                },
+              ),
+              _buildDateOfIssue(),
+              _subHeaderTitle("Date Of Service"),
+              _buildDateOfService(),
+              SizedBox(
+                height: 50,
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -84,13 +96,14 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
       children: <Widget>[
         Expanded(
           child: TextFormField(
-            controller: _dateOfIssueTxtCtrl,
-            decoration: InputDecoration(labelText: 'Date Of Issue'),
+            controller: widget.invoiceDetails.dateOfIssue.dateOfIssueCtrl,
+            maxLength: 10,
+            decoration: InputDecoration(labelText: 'Date Of Issue',counter: Offstage(),),
             validator: (String value) {
               return value.isEmpty ? 'Date of Issue is Required' : null;
             },
             onSaved: (String value) {
-              _dateOfIssue = value;
+              widget.invoiceDetails.dateOfIssue = new DateOfIssue(doi: value);
             },
           ),
         ),
@@ -118,8 +131,10 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
                   onChanged: (date) {},
                   onConfirm: (date) {
                     setState(() {
-                      _dateOfIssue = getDateString(date);
-                      setValueToController(_dateOfIssueTxtCtrl, _dateOfIssue);
+                      widget.invoiceDetails.dateOfIssue.doi =
+                          getDateString(date);
+                      widget.invoiceDetails.dateOfIssue = new DateOfIssue(
+                          doi: widget.invoiceDetails.dateOfIssue.doi);
                     });
                   },
                   currentTime: DateTime.now(),
@@ -164,13 +179,14 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
       children: <Widget>[
         Expanded(
           child: TextFormField(
-            controller: _dateOfService.firstDateTxtCtrl,
-            decoration: InputDecoration(labelText: 'From'),
+            controller: widget.invoiceDetails.dateOfService.firstDateTxtCtrl,
+            maxLength: 10,
+            decoration: InputDecoration(labelText: 'From',counter: Offstage(),),
             validator: (String value) {
-              return value.isEmpty ? 'Date of Service is Required' : null;
+              return value.isEmpty ? 'Date From is Required' : null;
             },
             onSaved: (String value) {
-              _dateOfService.firstDate = value;
+              widget.invoiceDetails.dateOfService.firstDate = value;
             },
           ),
         ),
@@ -179,13 +195,14 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
         ),
         Expanded(
           child: TextFormField(
-            controller: _dateOfService.lastDateTxtCtrl,
-            decoration: InputDecoration(labelText: 'To'),
+            controller: widget.invoiceDetails.dateOfService.lastDateTxtCtrl,
+            maxLength: 10,
+            decoration: InputDecoration(labelText: 'To',counter: Offstage(),),
             validator: (String value) {
-              return value.isEmpty ? 'Date of Service is Required' : null;
+              return value.isEmpty ? 'Date To is Required' : null;
             },
             onSaved: (String value) {
-              _dateOfService.lastDate = value;
+              widget.invoiceDetails.dateOfService.lastDate = value;
             },
           ),
         ),
@@ -218,13 +235,13 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
                   String firstDate = getDateString(picked[0]);
                   String lastDate = getDateString(picked[1]);
                   setState(() {
-                    _dateOfService = new DateOfService(
+                    widget.invoiceDetails.dateOfService = new DateOfService(
                         firstDate: firstDate, lastDate: lastDate);
                   });
                 } else if (picked != null && picked.length == 1) {
                   String firstDate = getDateString(picked[0]);
                   setState(() {
-                    _dateOfService =
+                    widget.invoiceDetails.dateOfService =
                         new DateOfService(firstDate: firstDate, lastDate: null);
                   });
                 }

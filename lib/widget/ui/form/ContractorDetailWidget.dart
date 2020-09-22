@@ -39,14 +39,14 @@ class ContactorDetailWidget extends StatelessWidget {
           textFieldMaxLength: 30,
           errorMessage: 'Company Name is Required',
           inputValue: _yourCompanyName,
-          validationRequired: true,
+          // validationRequired: true,
         ),
         FormSharedComponentWidget.buildTextField(
           labelText: "Address Line 1",
           textFieldMaxLength: 30,
           errorMessage: 'Address Line 1 cannot be empty',
           inputValue: _addressLine1,
-          validationRequired: true,
+          // validationRequired: true,
         ),
         FormSharedComponentWidget.buildTextField(
           labelText: "Address Line 2",

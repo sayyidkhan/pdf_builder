@@ -5,9 +5,12 @@ class PdfForm {
 }
 
 class InvoiceDetails {
+  TextEditingController invoiceNoTxtCtrl = new TextEditingController();
+
   String invoiceNumber;
-  String dateOfIssue;
+  DateOfIssue dateOfIssue = new DateOfIssue.empty();
   DateOfService dateOfService= new DateOfService.empty();
+
 }
 
 class ContactorDetails {
@@ -52,6 +55,21 @@ class OverallInvoice {
     contactorDetails = new ContactorDetails();
     clientDetails = new ClientDetails();
     serviceDetails = new List();
+  }
+
+}
+
+class DateOfIssue {
+  TextEditingController dateOfIssueCtrl = new TextEditingController();
+
+  String doi;
+
+  DateOfIssue.empty(){
+    dateOfIssueCtrl.text = this.doi;
+  }
+
+  DateOfIssue({this.doi}){
+    dateOfIssueCtrl.text = this.doi;
   }
 
 }

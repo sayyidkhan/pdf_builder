@@ -38,14 +38,14 @@ class ClientDetailWidget extends StatelessWidget {
           textFieldMaxLength: 30,
           errorMessage: 'Company Name is Required',
           inputValue: _billToCompanyName,
-          validationRequired: true,
+          // validationRequired: true,
         ),
         FormSharedComponentWidget.buildTextField(
           labelText: "Address Line 1",
           textFieldMaxLength: 30,
           errorMessage: 'Address Line 1 cannot be empty',
           inputValue: _billToAddressLine1,
-          validationRequired: true,
+          // validationRequired: true,
         ),
         FormSharedComponentWidget.buildTextField(
           labelText: "Address Line 2",
