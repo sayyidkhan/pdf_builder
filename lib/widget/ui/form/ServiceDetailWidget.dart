@@ -39,10 +39,38 @@ class _NewServiceDetailWidgetState extends State<NewServiceDetailWidget> {
           margin: EdgeInsets.only(top: 15),
           height: 340,
           color: Colors.blueGrey[100],
-          child: ListView.builder(
-            itemCount: serviceDetailList.length,
-            itemBuilder: (BuildContext context, int index) => addServiceItem(index, serviceDetailList[index]),
-          ),
+          child: serviceDetailList.length == 0
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "No Service List To Display",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Click on Plus Icon (+) to add new services",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: serviceDetailList.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      addServiceItem(index, serviceDetailList[index]),
+                ),
         ),
         SizedBox(
           height: 10,
