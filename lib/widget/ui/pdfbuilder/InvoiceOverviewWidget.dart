@@ -21,11 +21,11 @@ class InvoiceOverviewWidget {
       String subtitle,
       int pdfContent) {
     return ListTile(
-      contentPadding: EdgeInsets.all(15),
+      contentPadding: EdgeInsets.only(left: 10,top: 10,bottom: 10,right: 5),
       title: Text(title),
-      subtitle: Text(subtitle),
+      // subtitle: Text(subtitle),
       trailing: Wrap(
-        spacing: 8, // space between two icons
+        spacing: 2.5, // space between two icons
         children: <IconButton>[
           IconButton(
               icon: const Icon(Icons.image),
@@ -37,6 +37,11 @@ class InvoiceOverviewWidget {
                 await navigateToPage(context, pdf);
               }),
           IconButton(
+              icon: const Icon(Icons.edit),
+              tooltip: "Edit",
+              color: Colors.blue,
+              onPressed: null),
+          IconButton(
               icon: const Icon(Icons.delete),
               tooltip: "Delete",
               color: Colors.red.shade400,
@@ -46,6 +51,7 @@ class InvoiceOverviewWidget {
         ],
       ),
       onTap: () {
+
       },
     );
   }

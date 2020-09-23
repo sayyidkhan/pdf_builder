@@ -1,8 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:pdf_test/constant/AlertBoxContent.dart';
+import 'package:pdf_test/constant/GeneratePdfContent.dart';
+import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/main.dart';
 import 'package:pdf_test/widget/transitions/PageTransistions.dart';
 
@@ -43,10 +43,12 @@ class AlertBox {
     );
   }
 
-  static void showAlertDialog(BuildContext context) {
+  static void showAlertDialog(
+      BuildContext context, OverallInvoice overallInvoice) {
     int buttonListSelect = 0;
     String title = AlertBoxStatus.confirm.title;
     String description = AlertBoxStatus.confirm.description;
+    GeneratePdfContent pdf;
 
     void changeToLoadingScreen(StateSetter setState) {
       setState(() {
@@ -55,8 +57,11 @@ class AlertBox {
         buttonListSelect = 1;
       });
 
-      new Future.delayed(new Duration(seconds: 2), () {
+      new Future.delayed(new Duration(seconds: 3), () {
         setState(() {
+          pdf = GeneratePdfContent.PdfTemplate(
+              overallInvoice.invoiceDetails.invoiceNumber, overallInvoice
+          );
           title = AlertBoxStatus.completed.title;
           description = AlertBoxStatus.completed.description;
           buttonListSelect = 2;
@@ -69,12 +74,9 @@ class AlertBox {
       Navigator.of(context).pushReplacement(SlideRightRoute(page: MyHomePage()));
     }
 
-    void goToResultScreen() {
+    void goToResultScreen(BuildContext context) {
       print("go to result screen");
-    }
-
-    void changeButtonLayout() {
-
+      pdf.navigateToPdfPage(context);
     }
 
     showDialog(
@@ -95,7 +97,9 @@ class AlertBox {
             final loadingScreen = <Widget>[
               _pleaseWaitButton(),
               new CircularProgressIndicator(),
-              SizedBox(width: 5,)
+              SizedBox(
+                width: 5,
+              )
             ];
             final completedScreen = <Widget>[
               _generalButton(
@@ -106,7 +110,7 @@ class AlertBox {
               _generalButton(
                 context: context,
                 title: "View PDF",
-                onClick: () => goToResultScreen(),
+                onClick: () => goToResultScreen(context),
               ),
             ];
             //store in a list
@@ -125,6 +129,4 @@ class AlertBox {
       },
     );
   }
-
 }
-

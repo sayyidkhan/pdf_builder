@@ -1,7 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart';
+import 'package:pdf_test/constant/pdfTemplates/PdfTemplate2.dart';
+import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/database/IoOperations.dart';
+import 'package:pdf_test/screen/PdfPreviewScreen.dart';
 
 import 'DummyContent.dart';
 
@@ -11,10 +15,33 @@ class GeneratePdfContent {
   String _directory;
   final Document _pdf = new Document();
 
+  var content;
+
   String get fileName => _fileName;
 
   GeneratePdfContent(this._fileName,int content){
     _writeOnPdf(content);
+  }
+
+  GeneratePdfContent.PdfTemplate(this._fileName,OverallInvoice overallInvoice){
+    _writeOnPdfTemplateWriter(overallInvoice);
+  }
+
+  void _writeOnPdfTemplateWriter(OverallInvoice overallInvoice) async {
+    PdfTemplate2.pdfWriter(overallInvoice,_pdf);
+    content = await savePdf();
+  }
+
+  void navigateToPdfPage(BuildContext context) {
+    String fullPath = filePath();
+
+    Navigator.push(context, MaterialPageRoute(
+        builder: (context) =>
+            PdfPreviewScreen(
+              pdfFile: content,
+              path: fullPath,
+            )
+    ));
   }
 
   void _writeOnPdf(int content) {
@@ -49,6 +76,5 @@ class GeneratePdfContent {
     _directory = await IoOperations.tempDocDirectory(_fileName);
     return _directory;
   }
-
 
 }

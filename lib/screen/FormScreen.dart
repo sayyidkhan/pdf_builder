@@ -141,7 +141,7 @@ class _FormScreenState extends State<FormScreen> {
                   });
                 }
                 else if(currentPagination == list.length){
-                  AlertBox.showAlertDialog(context);
+                  AlertBox.showAlertDialog(context,overallInvoice);
                   //print data to verify its content
                   overallInvoice.printContent();
                 }
