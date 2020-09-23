@@ -1,9 +1,6 @@
-import 'dart:wasm';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf_test/database/FormDataStructure.dart';
-import 'package:pdf_test/widget/ui/sharedcomponents/DecimalTextInputFormatter.dart';
 
 class ServiceDetailWidget extends StatefulWidget {
   final List<ServiceDetails> serviceDetails;
@@ -155,21 +152,6 @@ class _ServiceDetailWidgetState extends State<ServiceDetailWidget> {
               ),
             ),
           ),
-          // Expanded(
-          //   child: Padding(
-          //   padding: const EdgeInsets.only(bottom: 22.5),
-          //   child: TextFormField(
-          //   controller: serviceDetail.nettPriceTxtCtrl,
-          //   decoration: InputDecoration(labelText: "Price"),
-          //   inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
-          //   keyboardType: TextInputType.numberWithOptions(decimal: true),
-          //   onSaved: (String value) {
-          //   serviceDetail.nettPrice = double.parse(value);
-          //   serviceDetail.nettPriceTxtCtrl.text = serviceDetail.nettPrice.toString();
-          //   },
-          //   ),
-          //   ),
-          // ),
         ],
       ),
     );
