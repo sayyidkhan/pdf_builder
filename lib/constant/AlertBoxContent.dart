@@ -18,13 +18,14 @@ class AlertBoxStatus {
       "Your document have been successfully processed."
   );
 
-  static void changeStatus(String title,String description,AlertBoxEnum alertBoxEnum){
+  static void changeStatus(String title,String description,AlertBoxEnum alertBoxEnum) {
     switch(alertBoxEnum){
       case AlertBoxEnum.confirm:
         title = AlertBoxStatus.confirm.title;
         description = AlertBoxStatus.confirm.description;
         break;
       case AlertBoxEnum.loading:
+        print("test");
         title = AlertBoxStatus.loading.title;
         description = AlertBoxStatus.loading.description;
         break;
@@ -33,7 +34,6 @@ class AlertBoxStatus {
         description = AlertBoxStatus.loading.description;
         break;
     }
-    return;
   }
 
 }

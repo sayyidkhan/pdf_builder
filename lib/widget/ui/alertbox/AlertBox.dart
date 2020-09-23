@@ -1,123 +1,130 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:pdf_test/constant/AlertBoxContent.dart';
+import 'package:pdf_test/main.dart';
+import 'package:pdf_test/widget/transitions/PageTransistions.dart';
 
 class AlertBox {
-  // static void showAlertDialog(BuildContext context) {
-  //   String title;
-  //   String description;
-  //   AlertBoxStatus.changeStatus(title, description,AlertBoxEnum.confirm);
-  //
-  //   showDialog(
-  //     barrierDismissible: false,
-  //     context: context,
-  //     builder: (context) {
-  //       return StatefulBuilder(
-  //         builder: (context, setState) {
-  //           return AlertDialog(
-  //             title: Text(title),
-  //             content: Text(description),
-  //             actions: <Widget>[
-  //               FlatButton(
-  //                   onPressed: () {
-  //                     setState(() => {
-  //                       title = AlertBoxStatus.loading.title,
-  //                       description = AlertBoxStatus.loading.description,
-  //                     });
-  //                   },
-  //                   child: Text("Change"))
-  //             ],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
+  static List<Widget> listOfButtons = initListOfButtons();
 
-  static void showAlertDialog(BuildContext context) {
-    int selectTitleOption = 0;
+  static List<Widget> initListOfButtons() {
+    //confirm buttons
+    List<Widget> listOfConfirmButton = new List();
 
-    String selectTitle(int no) {
-      switch (no) {
-        case 0:
-          return "Confirm";
-        case 1:
-          return "Loading...";
-        case 2:
-          return "Completed";
-      }
-      return "";
-    }
+    List<Widget> listOfButtons = new List();
+    return listOfButtons;
+  }
 
-    String selectDialogContent(int no) {
-      switch (no) {
-        case 0:
-          return "Would you like to confirm all the information entered?";
-        case 1:
-          return "Please Wait while we convert your document into a PDF...";
-        case 2:
-          return "Completed";
-      }
-      return "";
-    }
-
-    // set up the buttons
-    Widget cancelButton = FlatButton(
+  static Widget _cancelButton({BuildContext context}) {
+    return FlatButton(
       child: Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
-    Widget continueButton = FlatButton(
-      child: Text("Proceed"),
+  }
+
+  static Widget _pleaseWaitButton() {
+    return FlatButton(
+      child: Text("Please Wait..."),
+      onPressed: null,
+    );
+  }
+
+  static Widget _generalButton(
+      {BuildContext context, String title, Function onClick}) {
+    return FlatButton(
+      child: Text(title),
       onPressed: () {
-        print(selectTitleOption.toString());
-        selectTitleOption++;
+        onClick();
       },
     );
+  }
 
-    // show the dialog
+  static void showAlertDialog(BuildContext context) {
+    int buttonListSelect = 0;
+    String title = AlertBoxStatus.confirm.title;
+    String description = AlertBoxStatus.confirm.description;
+
+    void changeToLoadingScreen(StateSetter setState) {
+      setState(() {
+        title = AlertBoxStatus.loading.title;
+        description = AlertBoxStatus.loading.description;
+        buttonListSelect = 1;
+      });
+
+      new Future.delayed(new Duration(seconds: 2), () {
+        setState(() {
+          title = AlertBoxStatus.completed.title;
+          description = AlertBoxStatus.completed.description;
+          buttonListSelect = 2;
+        });
+      });
+    }
+
+    goToHomePage(BuildContext context) {
+      print("go to home page");
+      Navigator.of(context).pushReplacement(SlideRightRoute(page: MyHomePage()));
+    }
+
+    void goToResultScreen() {
+      print("go to result screen");
+    }
+
+    void changeButtonLayout() {
+
+    }
+
     showDialog(
+      barrierDismissible: false,
       context: context,
-      builder: (BuildContext context) {
-        StateSetter _setState;
-        String description;
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            //setup all button list
+            final confirmationScreen = <Widget>[
+              _cancelButton(context: context),
+              _generalButton(
+                context: context,
+                title: "Continue",
+                onClick: () => changeToLoadingScreen(setState),
+              ),
+            ];
+            final loadingScreen = <Widget>[
+              _pleaseWaitButton(),
+              new CircularProgressIndicator(),
+              SizedBox(width: 5,)
+            ];
+            final completedScreen = <Widget>[
+              _generalButton(
+                context: context,
+                title: "Go Back To Main Menu",
+                onClick: () => goToHomePage(context),
+              ),
+              _generalButton(
+                context: context,
+                title: "View PDF",
+                onClick: () => goToResultScreen(),
+              ),
+            ];
+            //store in a list
+            final buttonList = new List();
+            buttonList.add(confirmationScreen);
+            buttonList.add(loadingScreen);
+            buttonList.add(completedScreen);
 
-        return AlertDialog(
-          title: Text(selectTitle(selectTitleOption)),
-          content: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              _setState = setState;
-
-              _setState(() {
-                description = selectDialogContent(selectTitleOption);
-              });
-
-              return Text(description);
-            },
-          ),
-          actions: [
-            cancelButton,
-            continueButton,
-          ],
-        );
-      },
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(selectTitle(selectTitleOption)),
-          content: Text(
-              "Would you like to confirm all the information entered?"),
-          actions: [
-            cancelButton,
-            continueButton,
-          ],
+            return AlertDialog(
+              title: Text(title),
+              content: Text(description),
+              actions: buttonList[buttonListSelect],
+            );
+          },
         );
       },
     );
   }
+
 }
+

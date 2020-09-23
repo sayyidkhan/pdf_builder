@@ -31,8 +31,8 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Invoice Builder"),
+        automaticallyImplyLeading: false,
       ),
-
       body:
       listArray.isEmpty ?
         InvoiceOverviewWidget.emptyList() :
