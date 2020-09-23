@@ -2,7 +2,7 @@ import 'dart:wasm';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pdf_test/database/PdfForm.dart';
+import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/widget/ui/sharedcomponents/DecimalTextInputFormatter.dart';
 
 class ServiceDetailWidget extends StatefulWidget {

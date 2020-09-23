@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pdf_test/database/PdfForm.dart';
+import 'package:pdf_test/database/FormDataStructure.dart';
+import 'package:pdf_test/widget/ui/alertbox/AlertBox.dart';
 import 'package:pdf_test/widget/ui/form/BillingDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/ServiceDetailWidget.dart';
@@ -84,37 +85,6 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Widget backAndNextButton(BuildContext context) {
-      showAlertDialog() {
-      // set up the buttons
-      Widget cancelButton = FlatButton(
-        child: Text("Cancel"),
-        onPressed:  () {
-          Navigator.of(context).pop();
-        },
-      );
-      Widget continueButton = FlatButton(
-        child: Text("Proceed"),
-        onPressed:  () {},
-      );
-
-      // set up the AlertDialog
-      AlertDialog alert = AlertDialog(
-        title: Text("Confirm"),
-        content: Text("Would you like to confirm all the information entered?"),
-        actions: [
-          cancelButton,
-          continueButton,
-        ],
-      );
-
-      // show the dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
 
     Expanded backButton() {
       return Expanded(
@@ -171,7 +141,7 @@ class _FormScreenState extends State<FormScreen> {
                   });
                 }
                 else if(currentPagination == list.length){
-                  showAlertDialog();
+                  AlertBox.showAlertDialog(context);
                   //print data to verify its content
                   overallInvoice.printContent();
                 }

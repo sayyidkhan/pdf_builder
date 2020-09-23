@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-class PdfForm {
-
-}
-
 class InvoiceDetails {
   TextEditingController invoiceNoTxtCtrl = new TextEditingController();
 
