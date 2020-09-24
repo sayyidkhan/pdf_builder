@@ -59,7 +59,7 @@ class AlertBox {
 
       new Future.delayed(new Duration(seconds: 3), () {
         setState(() {
-          pdf = GeneratePdfContent.PdfTemplate(
+          pdf = GeneratePdfContent.pdfTemplate(
               overallInvoice.invoiceDetails.invoiceNumber, overallInvoice
           );
           title = AlertBoxStatus.completed.title;

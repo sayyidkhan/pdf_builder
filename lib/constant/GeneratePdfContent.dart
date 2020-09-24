@@ -19,11 +19,11 @@ class GeneratePdfContent {
 
   String get fileName => _fileName;
 
-  GeneratePdfContent(this._fileName,int content){
+  GeneratePdfContent(this._fileName,int content) {
     _writeOnPdf(content);
   }
 
-  GeneratePdfContent.PdfTemplate(this._fileName,OverallInvoice overallInvoice){
+  GeneratePdfContent.pdfTemplate(this._fileName,OverallInvoice overallInvoice){
     _writeOnPdfTemplateWriter(overallInvoice);
   }
 

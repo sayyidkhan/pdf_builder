@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
+import 'package:pdf_test/main.dart';
+import 'package:pdf_test/widget/transitions/PageTransistions.dart';
 import 'package:printing/printing.dart';
 
 class PdfPreviewScreen extends StatelessWidget {
@@ -22,6 +24,13 @@ class PdfPreviewScreen extends StatelessWidget {
     return PDFViewerScaffold(
       key: key,
       appBar: AppBar(
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () {
+              print("go to home page");
+              Navigator.of(context).pushReplacement(SlideRightRoute(page: MyHomePage()));
+            },
+          ),
           title: Text("PDF Preview"),
           actions: <Widget>[
             IconButton(
