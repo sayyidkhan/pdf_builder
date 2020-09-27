@@ -7,7 +7,7 @@ class PdfDB {
     var map = <String, dynamic> {
       'id' : id,
       'fileName' : fileName,
-      // 'filePath' : filePath,
+      'filePath' : filePath,
     };
     return map;
   }
@@ -15,10 +15,10 @@ class PdfDB {
   PdfDB.fromMap(Map<String,dynamic> map){
     id = map['id'];
     fileName = map['fileName'];
-    // filePath = map['filePath'];
+    filePath = map['filePath'];
   }
 
-  PdfDB(this.id, this.fileName);
+  PdfDB(this.id, this.fileName,this.filePath);
 }
 
 class PdfDBCounter {

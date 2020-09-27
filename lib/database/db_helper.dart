@@ -9,7 +9,7 @@ class DBHelper {
   static Database _db;
   static const String ID = 'id';
   static const String FILENAME = 'fileName';
-  // static const String FILEPATH = 'filepath';
+  static const String FILEPATH = 'filepath';
   static const String TABLE = 'pdfList';
   static const String DB_NAME = 'listOfPdf.db';
 
@@ -29,7 +29,7 @@ class DBHelper {
   }
 
   _onCreate(Database db,int version) async {
-    await db.execute("CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $FILENAME TEXT)");
+    await db.execute("CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $FILENAME TEXT, $FILEPATH TEXT)");
   }
 
   Future<PdfDB> save(PdfDB pdfDB) async {
@@ -46,7 +46,7 @@ class DBHelper {
 
   Future<List<PdfDB>> getPdfDB() async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.query(TABLE, columns: [ID,FILENAME]);
+    List<Map> maps = await dbClient.query(TABLE, columns: [ID,FILENAME,FILEPATH]);
     // List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<PdfDB> pdfDBList = [];
     if(maps.length > 0){

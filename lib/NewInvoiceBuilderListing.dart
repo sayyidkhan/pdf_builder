@@ -40,13 +40,13 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       if (isUpdating) {
-        PdfDB d = PdfDB(curUserId, name);
+        PdfDB d = PdfDB(curUserId, name,name + "_filepath");
         dbHelper.update(d);
         setState(() {
           isUpdating = false;
         });
       } else {
-        PdfDB d = PdfDB(null, name);
+        PdfDB d = PdfDB(null, name,name + "_filepath");
         dbHelper.save(d);
       }
       clearName();
@@ -80,7 +80,7 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
                         isUpdating = true;
                         curUserId = pdf.id;
                       });
-                      controller.text = pdf.id.toString();
+                      controller.text = pdf.fileName;
                     }),
                     DataCell(IconButton(
                       icon: const Icon(Icons.image),
@@ -124,7 +124,7 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
     return Form(
       key: formKey,
       child: Padding(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.only(left: 30,right: 30,top: 15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -133,7 +133,7 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
             TextFormField(
               controller: controller,
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: 'Change PDF Name'),
               validator: (val) => val.length == 0 ? "Enter Name" : null,
               onSaved: (val) => name = val,
             ),
@@ -145,7 +145,7 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
                   child: Text(isUpdating ? "UPDATE" : "ADD"),
                 ),
                 FlatButton(
-                  child: Text("CANCEL"),
+                  child: Text("CLOSE"),
                   onPressed: () {
                     setState(() {
                       isUpdating = false;
