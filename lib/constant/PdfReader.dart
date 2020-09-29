@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_test/screen/NewPdfPreviewScreen.dart';
 import 'package:pdf_test/screen/PdfPreviewScreen.dart';
 
 class PdfReader {
@@ -8,7 +7,7 @@ class PdfReader {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => NewPdfPreviewScreen(
+            builder: (context) => PdfPreviewScreen(
                   path: filePath,
                 )));
   }

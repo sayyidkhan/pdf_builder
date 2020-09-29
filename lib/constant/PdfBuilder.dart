@@ -28,8 +28,7 @@ class PdfBuilder {
   }
 
   //only use this method to create new PDF templates and persist into database
-  PdfBuilder.createPdfTemplate(
-      this._fileName, OverallInvoice overallInvoice) {
+  PdfBuilder.createPdfTemplate(this._fileName, OverallInvoice overallInvoice) {
     _writeOnPdfTemplateWriter(overallInvoice);
   }
 
@@ -52,7 +51,6 @@ class PdfBuilder {
         context,
         MaterialPageRoute(
             builder: (context) => PdfPreviewScreen(
-                  pdfFile: content,
                   path: fullPath,
                 )));
   }

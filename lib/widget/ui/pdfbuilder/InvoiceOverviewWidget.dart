@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf_test/constant/PdfBuilder.dart';
 import 'package:pdf_test/screen/PdfPreviewScreen.dart';
 
@@ -63,7 +62,6 @@ class InvoiceOverviewWidget {
     Navigator.push(context, MaterialPageRoute(
         builder: (context) =>
             PdfPreviewScreen(
-              pdfFile: content,
               path: fullPath,
             )
     ));

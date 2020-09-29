@@ -4,13 +4,13 @@ import 'package:pdf_test/database/db_helper.dart';
 import 'package:pdf_test/database/pdfDB.dart';
 import 'package:pdf_test/screen/FormScreen.dart';
 
-class NewInvoiceBuilderListing extends StatefulWidget {
+class InvoiceBuilderListScreen extends StatefulWidget {
   @override
-  _NewInvoiceBuilderListingState createState() =>
-      _NewInvoiceBuilderListingState();
+  _InvoiceBuilderListScreenState createState() =>
+      _InvoiceBuilderListScreenState();
 }
 
-class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
+class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   Future<List<PdfDB>> pdfDbList;
   TextEditingController controller = TextEditingController();
   String name;
