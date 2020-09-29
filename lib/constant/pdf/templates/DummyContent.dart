@@ -10,7 +10,7 @@ import 'package:flutter/material.dart' as fm;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
 
-import '../widget/pdf/InvoicePageWidget.dart';
+import '../../../widget/pdf/InvoicePageWidget.dart';
 
 class Content2 {
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_test/constant/AlertBoxContent.dart';
-import 'package:pdf_test/constant/PdfBuilder.dart';
+import 'package:pdf_test/constant/alertbox/AlertBoxContent.dart';
+import 'package:pdf_test/constant/pdf/crud/PdfBuilder.dart';
 import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/main.dart';
 import 'package:pdf_test/widget/transitions/PageTransistions.dart';

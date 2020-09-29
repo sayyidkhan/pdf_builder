@@ -2,14 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart';
-import 'package:pdf_test/constant/pdfTemplates/PdfTemplate2.dart';
+import 'package:pdf_test/constant/pdf/templates/PdfTemplate2.dart';
+
 import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/database/IoOperations.dart';
 import 'package:pdf_test/database/db_helper.dart';
 import 'package:pdf_test/database/pdfDB.dart';
 import 'package:pdf_test/screen/PdfPreviewScreen.dart';
 
-import 'DummyContent.dart';
+import '../templates/DummyContent.dart';
 
 class PdfBuilder {
   bool filePathAssigned = false;
