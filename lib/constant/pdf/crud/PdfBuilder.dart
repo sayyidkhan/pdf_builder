@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart';
+import 'package:pdf_test/constant/pdf/crud/PdfReader.dart';
 import 'package:pdf_test/constant/pdf/templates/PdfTemplate2.dart';
 
 import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/database/IoOperations.dart';
 import 'package:pdf_test/database/db_helper.dart';
 import 'package:pdf_test/database/pdfDB.dart';
-import 'package:pdf_test/screen/PdfPreviewScreen.dart';
 
 import '../templates/DummyContent.dart';
 
@@ -47,13 +47,7 @@ class PdfBuilder {
 
   void navigateToPdfPage(BuildContext context) {
     String fullPath = filePath();
-
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => PdfPreviewScreen(
-                  path: fullPath,
-                )));
+    PdfReader.navigateToPDFPage(context, fullPath);
   }
 
   void _writeOnPdf(int content) {
@@ -71,6 +65,7 @@ class PdfBuilder {
     String directory = await _tempDirectory;
     File file = new File(directory);
     final content = _pdf.save();
+    print("file saved successfully");
     file.writeAsBytesSync(content);
 
     filePathAssigned = true;
@@ -86,9 +81,6 @@ class PdfBuilder {
 
   Future<String> get _tempDirectory async {
     _directory = await IoOperations.tempDocDirectory(_fileName);
-    print("### file directory ###");
-    print(_directory);
-    print("######################");
     return _directory;
   }
 }

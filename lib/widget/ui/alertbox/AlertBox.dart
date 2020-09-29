@@ -84,6 +84,8 @@ class AlertBox {
         return StatefulBuilder(
           builder: (context, setState) {
             //setup all button list
+
+            //confirm screen
             final confirmationScreen = <Widget>[
               _cancelButton(context: context),
               _generalButton(
@@ -92,6 +94,8 @@ class AlertBox {
                 onClick: () => changeToLoadingScreen(setState),
               ),
             ];
+
+            //loading screen
             final loadingScreen = <Widget>[
               _pleaseWaitButton(),
               new CircularProgressIndicator(),
@@ -99,6 +103,8 @@ class AlertBox {
                 width: 5,
               )
             ];
+
+            //completed screen
             final completedScreen = <Widget>[
               _generalButton(
                 context: context,
@@ -111,6 +117,7 @@ class AlertBox {
                 onClick: () => goToResultScreen(context),
               ),
             ];
+
             //store in a list
             final buttonList = new List();
             buttonList.add(confirmationScreen);
