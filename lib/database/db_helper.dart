@@ -41,14 +41,18 @@ class DBHelper {
       var query = "INSERT INTO $TABLE ($FILENAME) VALUES ('"+pdfDB.fileName + "')";
       return await txn.rawInsert(query);
     });
-     */
+    */
   }
 
-  Future<List<PdfDB>> getPdfDB() async {
-    var dbClient = await db;
+  Future<List<PdfDB>> getPdfDB({dbClient}) async {
+    if(dbClient == null){
+      dbClient = await db;
+    }
+
     List<Map> maps = await dbClient.query(TABLE, columns: [ID,FILENAME,FILEPATH]);
     // List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<PdfDB> pdfDBList = [];
+    print("items in list: " + maps.length.toString());
     if(maps.length > 0){
       for(int i = 0;i < maps.length;i++){
           pdfDBList.add(PdfDB.fromMap(maps[i]));
@@ -69,6 +73,7 @@ class DBHelper {
 
   Future close() async {
     var dbClient = await db;
+    _db = null;
     dbClient.close();
   }
 

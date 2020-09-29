@@ -3,6 +3,7 @@ import 'package:pdf_test/constant/pdf/crud/PdfReader.dart';
 import 'package:pdf_test/database/db_helper.dart';
 import 'package:pdf_test/database/pdfDB.dart';
 import 'package:pdf_test/screen/FormScreen.dart';
+import 'package:pdf_test/widget/ui/pdfbuilder/InvoiceOverviewWidget.dart';
 
 class InvoiceBuilderListScreen extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   Future<List<PdfDB>> pdfDbList;
   TextEditingController controller = TextEditingController();
   String name;
-  int curPDFId;
+  int currentPDFId;
 
   final formKey = new GlobalKey<FormState>();
   DBHelper dbHelper;
@@ -22,16 +23,24 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
 
   @override
   void initState() {
-    super.initState();
-    dbHelper = DBHelper();
     isUpdating = false;
     refreshList();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    dbHelper.close();
+    super.dispose();
   }
 
   refreshList() {
+    dbHelper = DBHelper();
     setState(() {
       pdfDbList = dbHelper.getPdfDB();
+      print("refresh homepage list");
     });
+    dbHelper.close();
   }
 
   clearName() {
@@ -42,7 +51,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       if (isUpdating) {
-        PdfDB d = PdfDB(curPDFId, name, name + "_filepath");
+        PdfDB d = PdfDB(currentPDFId, name, name + "_filepath");
         dbHelper.update(d);
         setState(() {
           isUpdating = false;
@@ -59,7 +68,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   validateUpdate() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      PdfDB d = PdfDB(curPDFId, name, name + "_filepath");
+      PdfDB d = PdfDB(currentPDFId, name, name + "_filepath");
       dbHelper.update(d);
       setState(() {
         isUpdating = false;
@@ -101,7 +110,10 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
                     DataCell(Text(pdf.fileName)),
                     DataCell(
                         IconButton(
-                          icon: const Icon(Icons.image,color: Colors.blueAccent,),
+                          icon: const Icon(
+                            Icons.image,
+                            color: Colors.blueAccent,
+                          ),
                         ), onTap: () {
                       String filePath = pdf.filePath;
                       PdfReader.navigateToPDFPage(context, filePath);
@@ -112,7 +124,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
                         ), onTap: () {
                       setState(() {
                         isUpdating = true;
-                        curPDFId = pdf.id;
+                        currentPDFId = pdf.id;
                       });
                       controller.text = pdf.fileName;
                     }),
@@ -135,12 +147,13 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
       child: FutureBuilder(
         future: pdfDbList,
         builder: (context, snapshot) {
+          //if data exist, return data table
           if (snapshot.hasData) {
             return dataTable(snapshot.data);
           }
-
+          //if data is null or empty list, display no information found
           if (null == snapshot.data || snapshot.data.length == 0) {
-            return Text("No Data Found");
+            return Center(child: InvoiceOverviewWidget.emptyList());
           }
           return CircularProgressIndicator();
         },
@@ -199,9 +212,18 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Invoice Builder"),
-        automaticallyImplyLeading: false,
-      ),
+          title: Text("Invoice Builder"),
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                  color: Colors.white,
+                ),
+                onPressed: () async {
+                  await refreshList();
+                }),
+          ]),
       body: new Container(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,
