@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:pdf_test/constant/PdfReader.dart';
 import 'package:pdf_test/database/db_helper.dart';
 import 'package:pdf_test/database/pdfDB.dart';
 import 'package:pdf_test/screen/FormScreen.dart';
 
 class NewInvoiceBuilderListing extends StatefulWidget {
   @override
-  _NewInvoiceBuilderListingState createState() => _NewInvoiceBuilderListingState();
+  _NewInvoiceBuilderListingState createState() =>
+      _NewInvoiceBuilderListingState();
 }
 
 class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
   Future<List<PdfDB>> pdfDbList;
   TextEditingController controller = TextEditingController();
   String name;
-  int curUserId;
+  int curPDFId;
 
   final formKey = new GlobalKey<FormState>();
   DBHelper dbHelper;
@@ -40,18 +42,31 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       if (isUpdating) {
-        PdfDB d = PdfDB(curUserId, name,name + "_filepath");
+        PdfDB d = PdfDB(curPDFId, name, name + "_filepath");
         dbHelper.update(d);
         setState(() {
           isUpdating = false;
         });
       } else {
-        PdfDB d = PdfDB(null, name,name + "_filepath");
+        PdfDB d = PdfDB(null, name, name + "_filepath");
         dbHelper.save(d);
       }
       clearName();
       refreshList();
     }
+  }
+
+  validateUpdate() {
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      PdfDB d = PdfDB(curPDFId, name, name + "_filepath");
+      dbHelper.update(d);
+      setState(() {
+        isUpdating = false;
+      });
+    }
+    clearName();
+    refreshList();
   }
 
   SingleChildScrollView dataTable(List<PdfDB> pdfDBList) {
@@ -68,26 +83,39 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
                 fontWeight: FontWeight.bold,
                 color: Colors.grey[800]),
           )),
-          DataColumn(label: Text("")),
-          DataColumn(label: Text("")),
-          DataColumn(label: Text("")),
+          DataColumn(
+              label: Padding(
+            padding: const EdgeInsets.only(left: 11.0),
+            child: Text("VIEW"),
+          )),
+          DataColumn(
+              label: Padding(
+            padding: const EdgeInsets.only(left: 11.0),
+            child: Text("EDIT"),
+          )),
+          DataColumn(label: Text("DELETE")),
         ],
         rows: pdfDBList
             .map((pdf) => DataRow(
                   cells: [
-                    DataCell(Text(pdf.fileName), onTap: () {
+                    DataCell(Text(pdf.fileName)),
+                    DataCell(
+                        IconButton(
+                          icon: const Icon(Icons.image,color: Colors.blueAccent,),
+                        ), onTap: () {
+                      String filePath = pdf.filePath;
+                      PdfReader.navigateToPDFPage(context, filePath);
+                    }),
+                    DataCell(
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                        ), onTap: () {
                       setState(() {
                         isUpdating = true;
-                        curUserId = pdf.id;
+                        curPDFId = pdf.id;
                       });
                       controller.text = pdf.fileName;
                     }),
-                    DataCell(IconButton(
-                      icon: const Icon(Icons.image),
-                    )),
-                    DataCell(IconButton(
-                      icon: const Icon(Icons.edit),
-                    )),
                     DataCell(IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
@@ -120,45 +148,51 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
     );
   }
 
-  form() {
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: EdgeInsets.only(left: 30,right: 30,top: 15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          verticalDirection: VerticalDirection.down,
-          children: [
-            TextFormField(
-              controller: controller,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(labelText: 'Change PDF Name'),
-              validator: (val) => val.length == 0 ? "Enter Name" : null,
-              onSaved: (val) => name = val,
+  Widget form() {
+    return isUpdating
+        ? Container(
+            color: Theme.of(context).primaryColor,
+            child: Form(
+              key: formKey,
+              child: Padding(
+                padding:
+                    EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  verticalDirection: VerticalDirection.down,
+                  children: [
+                    TextFormField(
+                      controller: controller,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(labelText: 'Change PDF Name'),
+                      validator: (val) => val.length == 0 ? "Enter Name" : null,
+                      onSaved: (val) => name = val,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FlatButton(
+                          onPressed: validateUpdate,
+                          child: Text("UPDATE"),
+                        ),
+                        FlatButton(
+                          child: Text("CLOSE"),
+                          onPressed: () {
+                            setState(() {
+                              isUpdating = false;
+                            });
+                            clearName();
+                          },
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FlatButton(
-                  onPressed: validate,
-                  child: Text(isUpdating ? "UPDATE" : "ADD"),
-                ),
-                FlatButton(
-                  child: Text("CLOSE"),
-                  onPressed: () {
-                    setState(() {
-                      isUpdating = false;
-                    });
-                    clearName();
-                  },
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+          )
+        : Container();
   }
 
   @override
@@ -166,6 +200,7 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Invoice Builder"),
+        automaticallyImplyLeading: false,
       ),
       body: new Container(
         child: new Column(
@@ -173,21 +208,22 @@ class _NewInvoiceBuilderListingState extends State<NewInvoiceBuilderListing> {
           mainAxisSize: MainAxisSize.min,
           verticalDirection: VerticalDirection.down,
           children: [
-            form(),
             list(),
+            form(),
           ],
         ),
       ),
-    floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: 'Add New Invoice',
-            onPressed: () {
-              Navigator.pushNamed( context,  FormScreen.routeName );
-            }
-          ),
-        ),
+      floatingActionButton: isUpdating
+          ? null
+          : FloatingActionButton(
+              onPressed: () {},
+              child: IconButton(
+                  icon: const Icon(Icons.add),
+                  tooltip: 'Add New Invoice',
+                  onPressed: () {
+                    Navigator.pushNamed(context, FormScreen.routeName);
+                  }),
+            ),
     );
   }
 }

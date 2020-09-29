@@ -9,7 +9,7 @@ class DBHelper {
   static Database _db;
   static const String ID = 'id';
   static const String FILENAME = 'fileName';
-  static const String FILEPATH = 'filepath';
+  static const String FILEPATH = 'filePath';
   static const String TABLE = 'pdfList';
   static const String DB_NAME = 'listOfPdf.db';
 
@@ -71,6 +71,5 @@ class DBHelper {
     var dbClient = await db;
     dbClient.close();
   }
-
 
 }

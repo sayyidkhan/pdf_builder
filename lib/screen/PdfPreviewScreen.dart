@@ -5,6 +5,7 @@ import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:pdf_test/main.dart';
 import 'package:pdf_test/widget/transitions/PageTransistions.dart';
 import 'package:printing/printing.dart';
+import 'package:share/share.dart';
 
 class PdfPreviewScreen extends StatelessWidget {
   final Key key;
@@ -13,13 +14,13 @@ class PdfPreviewScreen extends StatelessWidget {
 
   PdfPreviewScreen({this.key,this.pdfFile,this.path});
 
-  Future printPdf(Uint8List pdf) async {
-    await Printing.sharePdf(bytes: pdf, filename: 'my-document.pdf');
+  Future printPdf(String filePath) async {
+    Share.shareFiles(['$filePath'], text: 'File Wallet');
+    //await Printing.sharePdf(bytes: pdf, filename: 'my-document.pdf');
   }
 
   @override
   Widget build(BuildContext context) {
-    final content = pdfFile;
 
     return PDFViewerScaffold(
       key: key,
@@ -37,7 +38,7 @@ class PdfPreviewScreen extends StatelessWidget {
               icon: const Icon(Icons.file_download),
               tooltip: 'download file',
               onPressed: () {
-                printPdf(pdfFile);
+                //printPdf(pdfFile);
                 print("download");
               },
             ),

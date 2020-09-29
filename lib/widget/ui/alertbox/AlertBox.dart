@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:pdf_test/constant/AlertBoxContent.dart';
-import 'package:pdf_test/constant/GeneratePdfContent.dart';
+import 'package:pdf_test/constant/PdfBuilder.dart';
 import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/main.dart';
 import 'package:pdf_test/widget/transitions/PageTransistions.dart';
@@ -43,12 +42,11 @@ class AlertBox {
     );
   }
 
-  static void showAlertDialog(
-      BuildContext context, OverallInvoice overallInvoice) {
+  static void showAlertDialog(BuildContext context, OverallInvoice overallInvoice) {
     int buttonListSelect = 0;
     String title = AlertBoxStatus.confirm.title;
     String description = AlertBoxStatus.confirm.description;
-    GeneratePdfContent pdf;
+    PdfBuilder pdf;
 
     void changeToLoadingScreen(StateSetter setState) {
       setState(() {
@@ -59,9 +57,9 @@ class AlertBox {
 
       new Future.delayed(new Duration(seconds: 3), () {
         setState(() {
-          pdf = GeneratePdfContent.pdfTemplate(
-              overallInvoice.invoiceDetails.invoiceNumber, overallInvoice
-          );
+          pdf = PdfBuilder.createPdfTemplate(
+              overallInvoice.invoiceDetails.invoiceNumber,
+              overallInvoice);
           title = AlertBoxStatus.completed.title;
           description = AlertBoxStatus.completed.description;
           buttonListSelect = 2;

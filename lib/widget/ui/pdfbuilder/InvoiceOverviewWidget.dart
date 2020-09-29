@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf_test/constant/GeneratePdfContent.dart';
+import 'package:pdf_test/constant/PdfBuilder.dart';
 import 'package:pdf_test/screen/PdfPreviewScreen.dart';
 
 class InvoiceOverviewWidget {
@@ -33,7 +33,7 @@ class InvoiceOverviewWidget {
               color: Colors.blue,
               onPressed: () async {
                 print("view button");
-                GeneratePdfContent pdf = new GeneratePdfContent(title,pdfContent);
+                PdfBuilder pdf = new PdfBuilder(title,pdfContent);
                 await navigateToPage(context, pdf);
               }),
           IconButton(
@@ -56,7 +56,7 @@ class InvoiceOverviewWidget {
     );
   }
 
-  Future navigateToPage(BuildContext context,GeneratePdfContent pdf) async {
+  Future navigateToPage(BuildContext context,PdfBuilder pdf) async {
     final content = await pdf.savePdf();
     String fullPath = pdf.filePath();
 

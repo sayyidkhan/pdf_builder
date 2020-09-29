@@ -5,47 +5,60 @@ import 'package:pdf/widgets.dart';
 import 'package:pdf_test/constant/pdfTemplates/PdfTemplate2.dart';
 import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/database/IoOperations.dart';
+import 'package:pdf_test/database/db_helper.dart';
+import 'package:pdf_test/database/pdfDB.dart';
 import 'package:pdf_test/screen/PdfPreviewScreen.dart';
 
 import 'DummyContent.dart';
 
-class GeneratePdfContent {
+class PdfBuilder {
   bool filePathAssigned = false;
   final String _fileName;
   String _directory;
   final Document _pdf = new Document();
-
   var content;
+  //SQL-STATEMENTS
+  DBHelper dbHelper;
+  PdfDB pdfDB;
 
   String get fileName => _fileName;
 
-  GeneratePdfContent(this._fileName,int content) {
+  PdfBuilder(this._fileName, int content) {
     _writeOnPdf(content);
   }
 
-  GeneratePdfContent.pdfTemplate(this._fileName,OverallInvoice overallInvoice){
+  //only use this method to create new PDF templates and persist into database
+  PdfBuilder.createPdfTemplate(
+      this._fileName, OverallInvoice overallInvoice) {
     _writeOnPdfTemplateWriter(overallInvoice);
   }
 
-  void _writeOnPdfTemplateWriter(OverallInvoice overallInvoice) async {
-    PdfTemplate2.pdfWriter(overallInvoice,_pdf);
+  Future<void> _writeOnPdfTemplateWriter(OverallInvoice overallInvoice) async {
+    PdfTemplate2.pdfWriter(overallInvoice, _pdf);
     content = await savePdf();
+    //SQL-STATEMENTS
+    dbHelper = DBHelper();
+    print("filename: " + _fileName.toString());
+    print("directory: " + _directory.toString());
+    pdfDB = PdfDB(null, _fileName, _directory);
+    dbHelper.save(pdfDB);
+    dbHelper.close();
   }
 
   void navigateToPdfPage(BuildContext context) {
     String fullPath = filePath();
 
-    Navigator.push(context, MaterialPageRoute(
-        builder: (context) =>
-            PdfPreviewScreen(
-              pdfFile: content,
-              path: fullPath,
-            )
-    ));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PdfPreviewScreen(
+                  pdfFile: content,
+                  path: fullPath,
+                )));
   }
 
   void _writeOnPdf(int content) {
-    switch(content){
+    switch (content) {
       case 1:
         Content2.pdfVersion1(_pdf);
         break;
@@ -66,7 +79,7 @@ class GeneratePdfContent {
   }
 
   String filePath() {
-    if(_directory == null){
+    if (_directory == null) {
       throw new Exception("file path not assigned");
     }
     return _directory;
@@ -74,7 +87,9 @@ class GeneratePdfContent {
 
   Future<String> get _tempDirectory async {
     _directory = await IoOperations.tempDocDirectory(_fileName);
+    print("### file directory ###");
+    print(_directory);
+    print("######################");
     return _directory;
   }
-
 }

@@ -24,8 +24,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
-
-  pdf: ^1.5.0
   path_provider: ^1.6.5
   flutter_full_pdf_viewer: ^1.0.6
   printing: ^3.3.1
@@ -36,6 +34,10 @@ dependencies:
   flutter_datetime_picker: 1.4.0
   #sql-lite
   sqflite: ^1.3.1+1
+  #pdf-readers
+  pdf: ^1.5.0
+  #share-file-on-flutter
+  share: ^0.6.5+2
 
 
 dev_dependencies:
