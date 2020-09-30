@@ -26,7 +26,6 @@ dependencies:
 
   path_provider: ^1.6.5
   flutter_full_pdf_viewer: ^1.0.6
-  printing: ^3.3.1
   google_fonts: ^1.0.0
   #date-picker
   date_range_picker: ^1.0.5
