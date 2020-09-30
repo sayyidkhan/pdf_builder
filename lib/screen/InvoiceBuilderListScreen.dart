@@ -4,6 +4,7 @@ import 'package:pdf_test/database/IoOperations.dart';
 import 'package:pdf_test/database/db_helper.dart';
 import 'package:pdf_test/database/pdfDB.dart';
 import 'package:pdf_test/screen/FormScreen.dart';
+import 'package:pdf_test/widget/ui/alertbox/ConfirmDeleteAlertBox.dart';
 import 'package:pdf_test/widget/ui/pdfbuilder/InvoiceOverviewWidget.dart';
 
 class InvoiceBuilderListScreen extends StatefulWidget {
@@ -22,6 +23,9 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   final formKey = new GlobalKey<FormState>();
   DBHelper dbHelper;
   bool isUpdating;
+  //alertbox
+  bool currentState;
+
 
   @override
   void initState() {
@@ -71,6 +75,24 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
     }
     clearName();
     refreshList();
+  }
+
+  deleteItemFromList(PdfDB pdf) async {
+    dbHelper = DBHelper();
+    await dbHelper.initDb();
+    await dbHelper.delete(pdf.id);
+    IoOperations.deleteDocsFromDirectory(pdf.filePath);
+    refreshList();
+  }
+
+  _validateDelete(bool newState,PdfDB pdf) {
+    currentState = newState;
+    if(currentState) {
+      deleteItemFromList(pdf);
+    }
+    else {
+      print("### item is not deleted ###");
+    }
   }
 
   SingleChildScrollView dataTable(List<PdfDB> pdfDBList) {
@@ -127,19 +149,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
                       });
                       controller.text = pdf.fileName;
                     }),
-                    DataCell(IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.red[600],
-                      ),
-                      onPressed: () async {
-                        dbHelper = DBHelper();
-                        await dbHelper.initDb();
-                        await dbHelper.delete(pdf.id);
-                        IoOperations.deleteDocsFromDirectory(pdf.filePath);
-                        refreshList();
-                      },
-                    ))
+                    DataCell(ConfirmDeleteAlertBoxButton(_validateDelete,pdf)),
                   ],
                 ))
             .toList(),
