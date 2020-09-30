@@ -251,16 +251,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
       appBar: AppBar(
           title: Text("Invoice Builder"),
           automaticallyImplyLeading: false,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(
-                  Icons.refresh,
-                  color: Colors.white,
-                ),
-                onPressed: () async {
-                  await refreshList();
-                }),
-          ]),
+          ),
       body: new Container(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.start,
