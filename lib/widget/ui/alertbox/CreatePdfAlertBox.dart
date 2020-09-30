@@ -5,7 +5,7 @@ import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/main.dart';
 import 'package:pdf_test/widget/transitions/PageTransistions.dart';
 
-class AlertBox {
+class CreatePdfAlertBox {
   static List<Widget> listOfButtons = initListOfButtons();
 
   static List<Widget> initListOfButtons() {
