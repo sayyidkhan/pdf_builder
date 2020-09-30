@@ -80,7 +80,7 @@ class PdfBuilder {
   }
 
   Future<String> get _tempDirectory async {
-    _directory = await IoOperations.tempDocDirectory(_fileName);
+    _directory = await IoOperations.writeDocsIntoDirectory(_fileName);
     return _directory;
   }
 }

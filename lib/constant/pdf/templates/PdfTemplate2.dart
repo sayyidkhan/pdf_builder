@@ -12,35 +12,43 @@ import 'package:pdf_test/database/FormDataStructure.dart';
 import 'package:pdf_test/widget/pdf/InvoicePageWidget.dart';
 
 class PdfTemplate2 {
+  static _validateNullText(String text) {
+    return text != null ? text : "";
+  }
 
-
-  static _buildServicesList(List<List<String>> list,OverallInvoice overallInvoice) {
+  static _buildServicesList(
+      List<List<String>> list, OverallInvoice overallInvoice) {
     int length = overallInvoice.serviceDetails.length;
     int counter = 0;
     double total = 0;
-    if(length > 0){
+    if (length > 0) {
       overallInvoice.serviceDetails.forEach((element) {
+        double nettPrice;
         counter++;
-        try{
+        try {
           total += double.parse(element.nettPrice);
-        }
-        on Exception {
+          nettPrice = double.parse(element.nettPrice);
+        } on Exception {
+          nettPrice = 0.00;
           print("unable to parse service no: $counter");
         }
 
-        list.add([counter.toString(),element.serviceName.toString(),"\$${element.nettPrice.toString()}"]);
+        list.add([
+          counter.toString(),
+          element.serviceName.toString(),
+          "\$${nettPrice.toString()}"
+        ]);
       });
 
       return total;
-    }
-    else {
+    } else {
       return 0.00;
     }
   }
 
-  static void pdfWriter(OverallInvoice overallInvoice, widgets.Document pdf) async {
+  static void pdfWriter(
+      OverallInvoice overallInvoice, widgets.Document pdf) async {
     final ByteData bytes = await rootBundle.load("image/test_header.jpg");
-//    final headerPng = decodeImage(f.readAsBytesSync());
     final headerImage = PdfImage.file(
       pdf.document,
       bytes: bytes.buffer.asUint8List(),
@@ -48,9 +56,6 @@ class PdfTemplate2 {
     final List<List<String>> servicesList = new List();
     servicesList.add(["No", "Service", "Total Price"]);
     double totalAmountToPay = _buildServicesList(servicesList, overallInvoice);
-
-//    final ralewayRegular = widgets.Font.ttf(await rootBundle.load("fonts/Raleway/Raleway-Regular.ttf"));
-//    final ralewayBold =  widgets.Font.ttf(await rootBundle.load("fonts/Raleway/Raleway-Bold.ttf"));
 
     const twoCm = 2.0 * PdfPageFormat.cm;
 
@@ -79,7 +84,8 @@ class PdfTemplate2 {
                 widgets.Padding(
                   padding: const widgets.EdgeInsets.only(top: 2),
                   child: widgets.Text(
-                      overallInvoice.invoiceDetails.invoiceNumber,
+                      _validateNullText(
+                          overallInvoice.invoiceDetails.invoiceNumber),
                       style: widgets.TextStyle(
                           fontSize: 20.0,
                           fontWeight: widgets.FontWeight.normal)),
@@ -98,7 +104,8 @@ class PdfTemplate2 {
                 widgets.Padding(
                   padding: const widgets.EdgeInsets.only(top: 2),
                   child: widgets.Text(
-                      overallInvoice.invoiceDetails.dateOfIssue.doi,
+                      _validateNullText(
+                          overallInvoice.invoiceDetails.dateOfIssue.doi),
                       style: widgets.TextStyle(
                           fontSize: 14.0,
                           fontWeight: widgets.FontWeight.normal)),
@@ -117,7 +124,8 @@ class PdfTemplate2 {
                 widgets.Padding(
                   padding: const widgets.EdgeInsets.only(top: 2),
                   child: widgets.Text(
-                      "${overallInvoice.invoiceDetails.dateOfService.firstDate} - ${overallInvoice.invoiceDetails.dateOfService.lastDate}",
+                      "${_validateNullText(overallInvoice.invoiceDetails.dateOfService.firstDate)}" +
+                          " - ${_validateNullText(overallInvoice.invoiceDetails.dateOfService.lastDate)}",
                       style: widgets.TextStyle(
                           fontSize: 14.0,
                           fontWeight: widgets.FontWeight.normal)),
@@ -137,10 +145,18 @@ class PdfTemplate2 {
                             fontWeight: widgets.FontWeight.bold,
                             decoration: widgets.TextDecoration.underline),
                       ),
-                      widgets.Text(overallInvoice.contractorDetails.companyName,),
-                      widgets.Text(overallInvoice.contractorDetails.addressLine1,),
-                      widgets.Text(overallInvoice.contractorDetails.addressLine2,),
-                      widgets.Text(overallInvoice.contractorDetails.addressLine3,),
+                      widgets.Text(
+                        _validateNullText(overallInvoice.contractorDetails.companyName),
+                      ),
+                      widgets.Text(
+                        _validateNullText(overallInvoice.contractorDetails.addressLine1),
+                      ),
+                      widgets.Text(
+                        _validateNullText(overallInvoice.contractorDetails.addressLine2),
+                      ),
+                      widgets.Text(
+                        _validateNullText(overallInvoice.contractorDetails.addressLine3),
+                      ),
                     ]),
                 widgets.Column(
                     crossAxisAlignment: widgets.CrossAxisAlignment.start,
@@ -151,10 +167,18 @@ class PdfTemplate2 {
                             fontWeight: widgets.FontWeight.bold,
                             decoration: widgets.TextDecoration.underline),
                       ),
-                      widgets.Text(overallInvoice.clientDetails.companyName,),
-                      widgets.Text(overallInvoice.clientDetails.addressLine1,),
-                      widgets.Text(overallInvoice.clientDetails.addressLine2,),
-                      widgets.Text(overallInvoice.clientDetails.addressLine3,),
+                      widgets.Text(
+                        _validateNullText(overallInvoice.clientDetails.companyName),
+                      ),
+                      widgets.Text(
+                        _validateNullText(overallInvoice.clientDetails.addressLine1),
+                      ),
+                      widgets.Text(
+                        _validateNullText(overallInvoice.clientDetails.addressLine2),
+                      ),
+                      widgets.Text(
+                        _validateNullText(overallInvoice.clientDetails.addressLine3),
+                      ),
                     ]),
               ],
             ),
@@ -195,7 +219,6 @@ class PdfTemplate2 {
                       ),
                       widgets.Text(
                         "Buyer",
-//                          style: widgets.TextStyle(font: ralewayRegular)
                       ),
                     ],
                   ),
@@ -208,7 +231,6 @@ class PdfTemplate2 {
                       ),
                       widgets.Text(
                         "Seller",
-//                          style: widgets.TextStyle(font: ralewayRegular)
                       ),
                     ],
                   )

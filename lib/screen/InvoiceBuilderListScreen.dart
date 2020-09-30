@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdf_test/constant/pdf/crud/PdfReader.dart';
+import 'package:pdf_test/database/IoOperations.dart';
 import 'package:pdf_test/database/db_helper.dart';
 import 'package:pdf_test/database/pdfDB.dart';
 import 'package:pdf_test/screen/FormScreen.dart';
@@ -131,6 +132,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
                         dbHelper = DBHelper();
                         await dbHelper.initDb();
                         await dbHelper.delete(pdf.id);
+                        IoOperations.deleteDocsFromDirectory(pdf.filePath);
                         refreshList();
                       },
                     ))
@@ -147,7 +149,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
         future: pdfDbList,
         builder: (context, snapshot) {
           //if data exist, return data table
-          if (snapshot.hasData) {
+          if (snapshot.hasData && snapshot.data.length > 0) {
             return dataTable(snapshot.data);
           }
           //if data is null or empty list, display no information found
