@@ -14,7 +14,8 @@ class InvoiceBuilderListScreen extends StatefulWidget {
 class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   Future<List<PdfDB>> pdfDbList;
   TextEditingController controller = TextEditingController();
-  String name;
+  String fileName;
+  String filePath;
   int currentPDFId;
 
   final formKey = new GlobalKey<FormState>();
@@ -34,6 +35,14 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
     super.dispose();
   }
 
+  assignFileName(String val) {
+    fileName = val;
+  }
+
+  clearName() {
+    controller.text = "";
+  }
+
   refreshList() {
     dbHelper = DBHelper();
     setState(() {
@@ -43,36 +52,17 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
     dbHelper.close();
   }
 
-  clearName() {
-    controller.text = "";
-  }
-
-  validate() {
+  validateUpdate() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      if (isUpdating) {
-        PdfDB d = PdfDB(currentPDFId, name, name + "_filepath");
-        dbHelper.update(d);
-        setState(() {
-          isUpdating = false;
-        });
-      } else {
-        PdfDB d = PdfDB(null, name, name + "_filepath");
-        dbHelper.save(d);
-      }
-      clearName();
-      refreshList();
-    }
-  }
-
-  validateUpdate() {
-    if (formKey.currentState.validate()) {
-      formKey.currentState.save();
-      PdfDB d = PdfDB(currentPDFId, name, name + "_filepath");
+      PdfDB d = PdfDB(currentPDFId, fileName, filePath);
+      dbHelper = DBHelper();
+      await dbHelper.initDb();
       dbHelper.update(d);
       setState(() {
         isUpdating = false;
       });
+      dbHelper.close();
     }
     clearName();
     refreshList();
@@ -120,18 +110,27 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
                     }),
                     DataCell(
                         IconButton(
-                          icon: const Icon(Icons.edit),
+                          icon: const Icon(
+                            Icons.edit,
+                            color: Colors.blueGrey,
+                          ),
                         ), onTap: () {
                       setState(() {
                         isUpdating = true;
                         currentPDFId = pdf.id;
+                        filePath = pdf.filePath;
                       });
                       controller.text = pdf.fileName;
                     }),
                     DataCell(IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        dbHelper.delete(pdf.id);
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red[600],
+                      ),
+                      onPressed: () async {
+                        dbHelper = DBHelper();
+                        await dbHelper.initDb();
+                        await dbHelper.delete(pdf.id);
                         refreshList();
                       },
                     ))
@@ -176,21 +175,43 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
                   verticalDirection: VerticalDirection.down,
                   children: [
                     TextFormField(
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      //cursorColor: Colors.white,
                       controller: controller,
                       keyboardType: TextInputType.text,
-                      decoration: InputDecoration(labelText: 'Change PDF Name'),
+                      decoration: InputDecoration(
+                        labelText: 'Change PDF Name',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white38),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white38),
+                        ),
+                      ),
                       validator: (val) => val.length == 0 ? "Enter Name" : null,
-                      onSaved: (val) => name = val,
+                      onSaved: (val) => assignFileName(val),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         FlatButton(
                           onPressed: validateUpdate,
-                          child: Text("UPDATE"),
+                          child: Text(
+                            "UPDATE",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                         FlatButton(
-                          child: Text("CLOSE"),
+                          child: Text(
+                            "CLOSE",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           onPressed: () {
                             setState(() {
                               isUpdating = false;
