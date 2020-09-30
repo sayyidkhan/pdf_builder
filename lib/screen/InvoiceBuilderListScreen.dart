@@ -15,9 +15,9 @@ class InvoiceBuilderListScreen extends StatefulWidget {
 class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   Future<List<PdfDB>> pdfDbList;
   TextEditingController controller = TextEditingController();
-  String fileName;
-  String filePath;
+  String newFileName;
   int currentPDFId;
+  PdfDB currentPDFdb;
 
   final formKey = new GlobalKey<FormState>();
   DBHelper dbHelper;
@@ -37,7 +37,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   }
 
   assignFileName(String val) {
-    fileName = val;
+    newFileName = val;
   }
 
   clearName() {
@@ -56,7 +56,11 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
   validateUpdate() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      PdfDB d = PdfDB(currentPDFId, fileName, filePath);
+      //IO Operations
+      final newFilePath = await IoOperations.renameDocsFromDirectory(
+          currentPDFdb.filePath, currentPDFdb.fileName, newFileName);
+      //SQL Operations
+      PdfDB d = PdfDB(currentPDFId, newFileName, newFilePath);
       dbHelper = DBHelper();
       await dbHelper.initDb();
       dbHelper.update(d);
@@ -119,7 +123,7 @@ class _InvoiceBuilderListScreenState extends State<InvoiceBuilderListScreen> {
                       setState(() {
                         isUpdating = true;
                         currentPDFId = pdf.id;
-                        filePath = pdf.filePath;
+                        currentPDFdb = pdf;
                       });
                       controller.text = pdf.fileName;
                     }),
