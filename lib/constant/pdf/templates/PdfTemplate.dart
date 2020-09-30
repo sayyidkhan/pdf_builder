@@ -8,10 +8,10 @@ import 'package:pdf/widgets.dart' as widgets;
 import 'package:flutter/material.dart' as fm;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf_test/database/FormDataStructure.dart';
+import 'package:pdf_test/database/dao/FormDAO.dart';
 import 'package:pdf_test/widget/pdf/InvoicePageWidget.dart';
 
-class PdfTemplate2 {
+class PdfTemplate {
   static _validateNullText(String text) {
     return text != null ? text : "";
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_test/database/pdfDB.dart';
+import 'package:pdf_test/database/dao/pdfDAO.dart';
 
 class ConfirmDeleteAlertBoxButton extends StatelessWidget {
   final Function deleteFunction;

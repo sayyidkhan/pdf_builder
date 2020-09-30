@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pdf_test/constant/pdf/crud/PdfReader.dart';
-import 'package:pdf_test/database/IoOperations.dart';
-import 'package:pdf_test/database/db_helper.dart';
-import 'package:pdf_test/database/pdfDB.dart';
+import 'package:pdf_test/database/io/IoOperations.dart';
+import 'package:pdf_test/database/sql/db_helper.dart';
+import 'package:pdf_test/database/dao/pdfDAO.dart';
 import 'package:pdf_test/screen/FormScreen.dart';
 import 'package:pdf_test/widget/ui/alertbox/ConfirmDeleteAlertBox.dart';
 import 'package:pdf_test/widget/ui/pdfbuilder/InvoiceOverviewWidget.dart';

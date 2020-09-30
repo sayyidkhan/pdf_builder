@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf_test/database/pdfDB.dart';
+import 'package:pdf_test/database/dao/pdfDAO.dart';
 import 'dart:io' as io;
 import 'package:sqflite/sqflite.dart';
 

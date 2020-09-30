@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_test/database/FormDataStructure.dart';
+import 'package:pdf_test/database/dao/FormDAO.dart';
 
 //for the contractor & client details
 class BillingWidget extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pdf_test/database/FormDataStructure.dart';
+import 'package:pdf_test/database/dao/FormDAO.dart';
 import 'package:pdf_test/widget/ui/alertbox/CreatePdfAlertBox.dart';
 import 'package:pdf_test/widget/ui/form/BillingDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceDetailWidget.dart';

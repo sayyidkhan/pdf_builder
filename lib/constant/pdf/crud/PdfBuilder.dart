@@ -3,14 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart';
 import 'package:pdf_test/constant/pdf/crud/PdfReader.dart';
-import 'package:pdf_test/constant/pdf/templates/PdfTemplate2.dart';
+import 'package:pdf_test/constant/pdf/templates/PdfTemplate.dart';
 
-import 'package:pdf_test/database/FormDataStructure.dart';
-import 'package:pdf_test/database/IoOperations.dart';
-import 'package:pdf_test/database/db_helper.dart';
-import 'package:pdf_test/database/pdfDB.dart';
-
-import '../templates/DummyContent.dart';
+import 'package:pdf_test/database/dao/FormDAO.dart';
+import 'package:pdf_test/database/io/IoOperations.dart';
+import 'package:pdf_test/database/sql/db_helper.dart';
+import 'package:pdf_test/database/dao/pdfDAO.dart';
 
 class PdfBuilder {
   bool filePathAssigned = false;
@@ -24,17 +22,13 @@ class PdfBuilder {
 
   String get fileName => _fileName;
 
-  PdfBuilder(this._fileName, int content) {
-    _writeOnPdf(content);
-  }
-
   //only use this method to create new PDF templates and persist into database
   PdfBuilder.createPdfTemplate(this._fileName, OverallInvoice overallInvoice) {
     _writeOnPdfTemplateWriter(overallInvoice);
   }
 
   Future<void> _writeOnPdfTemplateWriter(OverallInvoice overallInvoice) async {
-    PdfTemplate2.pdfWriter(overallInvoice, _pdf);
+    PdfTemplate.pdfWriter(overallInvoice, _pdf);
     content = await savePdf();
     //SQL-STATEMENTS
     dbHelper = DBHelper();
@@ -48,17 +42,6 @@ class PdfBuilder {
   void navigateToPdfPage(BuildContext context) {
     String fullPath = filePath();
     PdfReader.navigateToPDFPage(context, fullPath);
-  }
-
-  void _writeOnPdf(int content) {
-    switch (content) {
-      case 1:
-        Content2.pdfVersion1(_pdf);
-        break;
-      case 2:
-        Content2.pdfVersion2(_pdf);
-        break;
-    }
   }
 
   Future savePdf() async {
