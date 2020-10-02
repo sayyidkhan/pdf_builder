@@ -4,11 +4,12 @@ import 'package:pdf_test/database/dao/FormDAO.dart';
 
 class ServiceDetailWidget extends StatefulWidget {
   final List<ServiceDetails> serviceDetails;
-
+  final int pageIndex;
+  final Function validateController;
   @override
   _ServiceDetailWidgetState createState() => _ServiceDetailWidgetState();
 
-  ServiceDetailWidget(this.serviceDetails);
+  ServiceDetailWidget(this.serviceDetails,this.pageIndex,this.validateController);
 }
 
 class _ServiceDetailWidgetState extends State<ServiceDetailWidget> {
@@ -36,7 +37,14 @@ class _ServiceDetailWidgetState extends State<ServiceDetailWidget> {
     return Form(
       key: formKey,
       onChanged: () {
-        formKey.currentState.save();
+        if (formKey.currentState.validate()) {
+          widget.validateController(widget.pageIndex,false);
+          formKey.currentState.save();
+        }
+        else {
+          //prevent procced to next page if validation is not successful
+          widget.validateController(widget.pageIndex,true);
+        }
       },
       child: Column(
         children: [
@@ -122,7 +130,7 @@ class _ServiceDetailWidgetState extends State<ServiceDetailWidget> {
               maxLength: 20,
               decoration: InputDecoration(labelText: "Service Name"),
               validator: (String value) {
-                return value.isEmpty ? 'Service Name ${(index + 1).toString()} is Required' : null;
+                return value.isEmpty ? 'Empty' : null;
               },
               onSaved: (String value) {
                 serviceDetail.serviceName = value;
@@ -144,6 +152,9 @@ class _ServiceDetailWidgetState extends State<ServiceDetailWidget> {
                   ],
                   decoration: InputDecoration(labelText: "Price"),
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  validator: (String value) {
+                    return value.isEmpty ? 'Empty' : null;
+                  },
                   onSaved: (String value) {
                     //only parse when the value is valid to parse
                     serviceDetail.nettPrice = value;

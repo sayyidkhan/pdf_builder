@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_test/database/dao/FormDAO.dart';
@@ -16,6 +18,8 @@ class _FormScreenState extends State<FormScreen> {
   final List<Widget> list = new List();
   int currentPagination = 1;
   OverallInvoice overallInvoice;
+  //errorMessage
+  String errorMessage;
   //validation controllers
   bool validateInvoiceDetail = false;
   bool validateContractorDetail = false;
@@ -35,19 +39,19 @@ class _FormScreenState extends State<FormScreen> {
     super.dispose();
   }
 
-  void toggleValidationStatus(int currentPagination,bool status) {
+  void toggleValidationStatus(int currentPagination, bool status) {
     print(currentPagination);
-    switch(currentPagination){
-      case(1):
+    switch (currentPagination) {
+      case (1):
         validateInvoiceDetail = status;
         break;
-      case(2):
+      case (2):
         validateContractorDetail = status;
         break;
-      case(3):
+      case (3):
         validateClientDetail = status;
         break;
-      case(4):
+      case (4):
         validateServiceDetail = status;
         break;
     }
@@ -58,26 +62,96 @@ class _FormScreenState extends State<FormScreen> {
       validateInvoiceDetail,
       validateContractorDetail,
       validateClientDetail,
+      validateServiceDetail
     ];
 
     bool result = false;
     validationItem.forEach((element) {
-      if(element){
+      if (element) {
         result = true;
       }
     });
     return result;
   }
 
+  bool validateAllFields(String errorMessage) {
+    bool checkIfNullOrEmpty(String value) {
+      if (value != null) {
+        value.trim();
+        return value.isEmpty;
+      }
+      else{
+        return true;
+      }
+    }
+
+    bool loopCheckEmptiness(List<String> list) {
+      bool result = false;
+      if (list != null || list.length == 0) {
+        list.forEach((element) {
+          bool state = checkIfNullOrEmpty(element);
+          if (state) {
+            result = true;
+          }
+        });
+      }
+      return result;
+    }
+
+    bool validateInvoiceDetails(InvoiceDetails invoiceDetails) {
+      bool state = false;
+
+      if (checkIfNullOrEmpty(invoiceDetails.invoiceNumber)) {
+        state = true;
+      }
+      if (checkIfNullOrEmpty(invoiceDetails.dateOfIssue.doi)) {
+        state = true;
+      }
+      if (checkIfNullOrEmpty(invoiceDetails.dateOfService.firstDate)) {
+        state = true;
+      }
+      if (checkIfNullOrEmpty(invoiceDetails.dateOfService.lastDate)) {
+        state = true;
+      }
+      return state;
+    }
+
+    //main logic
+    var buffer = new StringBuffer();
+    bool state = false;
+
+    if (overallInvoice != null) {
+      InvoiceDetails invoiceDetails = overallInvoice.invoiceDetails;
+      BillingDetails contractorDetails = overallInvoice.contractorDetails;
+      BillingDetails clientDetails = overallInvoice.clientDetails;
+      List<ServiceDetails> serviceDetails = overallInvoice.serviceDetails;
+
+      if (validateInvoiceDetails(invoiceDetails)) {
+        state = true;
+        buffer.write("1. Field in the Invoice Details are incomplete. \n alop");
+      }
+
+      errorMessage = buffer.toString();
+      if(errorMessage.isNotEmpty){
+        print(errorMessage);
+      }
+    }
+    return state;
+  }
+
   List<Widget> initPageDetail() {
     //first page
-    list.add(InvoiceDetailWidget(overallInvoice.invoiceDetails,1,toggleValidationStatus));
+    list.add(InvoiceDetailWidget(
+        overallInvoice.invoiceDetails, 1, toggleValidationStatus));
     //second page
-    list.add(BillingWidget(overallInvoice.contractorDetails,2,toggleValidationStatus));
+    list.add(BillingWidget(
+        overallInvoice.contractorDetails, 2, toggleValidationStatus));
     //third page
-    list.add(BillingWidget(overallInvoice.clientDetails,3,toggleValidationStatus));
+    list.add(
+        BillingWidget(overallInvoice.clientDetails, 3, toggleValidationStatus));
     //fourth page
-    list.add(ServiceDetailWidget(overallInvoice.serviceDetails));
+    list.add(ServiceDetailWidget(
+        overallInvoice.serviceDetails, 4, toggleValidationStatus));
     return list;
   }
 
@@ -138,27 +212,27 @@ class _FormScreenState extends State<FormScreen> {
               border: Border.all(
                 color: Colors.grey[500],
               ),
-              color: currentPagination != 1 ? Colors.red[700] : Colors.grey[500],
+              color:
+                  currentPagination != 1 ? Colors.red[700] : Colors.grey[500],
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             height: 40,
             width: double.infinity,
             child: FlatButton(
               textColor: Colors.white,
-              onPressed: currentPagination != 1 ? () {
-                //prevent page to navigate, if there is error messages not handled
-                var checkValidationMsgs = checkValidationStatus();
-                if(checkValidationMsgs) {
-                  validationErrorMsg();
-                }
-                else {
-                  setState(() {
-                    currentPagination--;
-                  });
-                }
-              }
-              :
-              null,
+              onPressed: currentPagination != 1
+                  ? () {
+                      //prevent page to navigate, if there is error messages not handled
+                      var checkValidationMsgs = checkValidationStatus();
+                      if (checkValidationMsgs) {
+                        validationErrorMsg();
+                      } else {
+                        setState(() {
+                          currentPagination--;
+                        });
+                      }
+                    }
+                  : null,
               child: Text(
                 "Back",
                 style: TextStyle(fontWeight: FontWeight.normal),
@@ -187,19 +261,21 @@ class _FormScreenState extends State<FormScreen> {
               onPressed: () {
                 //prevent page to navigate, if there is error messages not handled
                 var checkValidationMsgs = checkValidationStatus();
-                if(checkValidationMsgs){
+                if (checkValidationMsgs) {
                   validationErrorMsg();
-                }
-                else{
+                } else {
                   if (currentPagination < list.length) {
                     setState(() {
                       currentPagination++;
                     });
-                  }
-                  else if(currentPagination == list.length){
-                    CreatePdfAlertBox.showAlertDialog(context,overallInvoice);
-                    //print data to verify its content
-                    overallInvoice.printContent();
+                  } else if (currentPagination == list.length) {
+                    if (validateAllFields(errorMessage)) {
+
+                    } else {
+                      CreatePdfAlertBox.showAlertDialog(context, overallInvoice);
+                      //print data to verify its content
+                      overallInvoice.printContent();
+                    }
                   }
                 }
               },
@@ -236,10 +312,9 @@ class _FormScreenState extends State<FormScreen> {
       onTap: () {
         //prevent page to navigate, if there is error messages not handled
         var checkValidationMsgs = checkValidationStatus();
-        if(checkValidationMsgs) {
+        if (checkValidationMsgs) {
           validationErrorMsg();
-        }
-        else {
+        } else {
           setState(() {
             currentPagination = number;
           });

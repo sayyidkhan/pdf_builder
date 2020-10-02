@@ -185,7 +185,7 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             maxLength: 10,
             decoration: InputDecoration(labelText: 'From',counter: Offstage(),),
             validator: (String value) {
-              return value.isEmpty ? 'Date From is Required' : null;
+              return value.isEmpty ? 'Empty' : null;
             },
             onSaved: (String value) {
               widget.invoiceDetails.dateOfService.firstDate = value;
@@ -201,7 +201,7 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             maxLength: 10,
             decoration: InputDecoration(labelText: 'To',counter: Offstage(),),
             validator: (String value) {
-              return value.isEmpty ? 'Date To is Required' : null;
+              return value.isEmpty ? 'Empty' : null;
             },
             onSaved: (String value) {
               widget.invoiceDetails.dateOfService.lastDate = value;
