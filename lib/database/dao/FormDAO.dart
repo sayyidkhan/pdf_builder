@@ -84,7 +84,7 @@ class OverallInvoice {
     clientDetails = new BillingDetails();
     serviceDetails = new List();
 
-    serviceDetails.add(ServiceDetails("init", "0.00"));
+    serviceDetails.add(ServiceDetails("", "0.00"));
   }
 
   void printContent() {

@@ -34,20 +34,22 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
     maxYear = getYear(2);
   }
 
+  void validateForm() {
+    if (formKey.currentState.validate()) {
+      widget.validateController(widget.pageIndex,false);
+      formKey.currentState.save();
+    }
+    else {
+      //prevent procced to next page if validation is not successful
+      widget.validateController(widget.pageIndex,true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      onChanged: () {
-        if (formKey.currentState.validate()) {
-          widget.validateController(widget.pageIndex,false);
-          formKey.currentState.save();
-        }
-        else {
-          //prevent procced to next page if validation is not successful
-          widget.validateController(widget.pageIndex,true);
-        }
-      },
+      onChanged: validateForm,
       child: Column(
         children: [
           Padding(
@@ -138,6 +140,9 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
                       widget.invoiceDetails.dateOfIssue = new DateOfIssue(
                           doi: widget.invoiceDetails.dateOfIssue.doi);
                     });
+                    new Future.delayed(new Duration(seconds: 1), () {
+                      validateForm();
+                    });
                   },
                   currentTime: DateTime.now(),
                   locale: LocaleType.en,
@@ -224,8 +229,7 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
             child: FlatButton(
               textColor: Theme.of(context).primaryColor,
               onPressed: () async {
-                final List<DateTime> picked =
-                    await DateRangePicker.showDatePicker(
+                final List<DateTime> picked = await DateRangePicker.showDatePicker(
                   context: context,
                   initialFirstDate: DateTime.now(),
                   initialLastDate:
@@ -247,6 +251,10 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
                         new DateOfService(firstDate: firstDate, lastDate: null);
                   });
                 }
+
+                new Future.delayed(new Duration(seconds: 1), () {
+                  validateForm();
+                });
               },
               child: Text(
                 "Select Date",

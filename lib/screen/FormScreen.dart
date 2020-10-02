@@ -41,7 +41,6 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   void toggleValidationStatus(int currentPagination, bool status) {
-    print(currentPagination);
     switch (currentPagination) {
       case (1):
         validateInvoiceDetail = status;
@@ -104,6 +103,41 @@ class _FormScreenState extends State<FormScreen> {
       return state;
     }
 
+    bool validateContractorDetails(BillingDetails billingDetails) {
+      bool state = false;
+
+      if (checkIfNullOrEmpty(billingDetails.companyName)) {
+        state = true;
+      }
+      if (checkIfNullOrEmpty(billingDetails.addressLine1)) {
+        state = true;
+      }
+
+      return state;
+    }
+
+    bool validateServiceDetails(List<ServiceDetails> serviceDetails) {
+      if(serviceDetails != null){
+        if(serviceDetails.isEmpty){
+          return true;
+        }
+        else{
+          bool result = false;
+          serviceDetails.forEach((element) {
+            print(element.serviceName);
+            bool serviceState = checkIfNullOrEmpty(element.serviceName);
+            bool netPrice = checkIfNullOrEmpty(element.nettPrice);
+            if(serviceState  || netPrice) {
+              print("check");
+              result = true;
+            }
+          });
+          return result;
+        }
+      }
+      return false;
+    }
+
     //main logic
     var buffer = new StringBuffer();
     bool state = false;
@@ -114,9 +148,29 @@ class _FormScreenState extends State<FormScreen> {
       BillingDetails clientDetails = overallInvoice.clientDetails;
       List<ServiceDetails> serviceDetails = overallInvoice.serviceDetails;
 
+      int counter = 0;
       if (validateInvoiceDetails(invoiceDetails)) {
         state = true;
-        buffer.write("1.Invoice Details incomplete Fields. \n alop");
+        counter++;
+        buffer.write("$counter.Invoice Details incomplete Fields.\n");
+      }
+
+      if(validateContractorDetails(contractorDetails)) {
+        state = true;
+        counter++;
+        buffer.write("$counter.Contractor Details incomplete Fields.\n");
+      }
+
+      if(validateContractorDetails(clientDetails)) {
+        state = true;
+        counter++;
+        buffer.write("$counter.Client Details incomplete Fields.\n");
+      }
+
+      if(validateServiceDetails(serviceDetails)) {
+        state = true;
+        counter++;
+        buffer.write("$counter.Service Details incomplete Fields.\n");
       }
 
       errorMessage = buffer.toString();
