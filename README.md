@@ -16,7 +16,7 @@ A Mobile App which you will use a form to fill up your contract details and gene
 4. open terminal on the current folder directory
 5. type "flutter run" on the terminal and hit enter to run the emulator
 
-ensure to build the pubspec.yaml file dependencies first prior to running on the mobile app emulator
+* ensure to build the pubspec.yaml file dependencies first prior to running on the mobile app emulator
 
 ## App Logo on IOS Homepage
 <img width="435" alt="Screenshot 2020-10-02 at 10 48 37 PM" src="https://user-images.githubusercontent.com/22993048/94937364-11b3c680-0502-11eb-802c-905d034e674d.png">
