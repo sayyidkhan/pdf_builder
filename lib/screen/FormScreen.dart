@@ -36,6 +36,7 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   void toggleValidationStatus(int currentPagination,bool status) {
+    print(currentPagination);
     switch(currentPagination){
       case(1):
         validateInvoiceDetail = status;
@@ -55,14 +56,14 @@ class _FormScreenState extends State<FormScreen> {
   bool checkValidationStatus() {
     List<bool> validationItem = [
       validateInvoiceDetail,
+      validateContractorDetail,
+      validateClientDetail,
     ];
-    var result;
+
+    bool result = false;
     validationItem.forEach((element) {
       if(element){
         result = true;
-      }
-      else{
-        result = false;
       }
     });
     return result;
@@ -70,11 +71,11 @@ class _FormScreenState extends State<FormScreen> {
 
   List<Widget> initPageDetail() {
     //first page
-    list.add(InvoiceDetailWidget(overallInvoice.invoiceDetails,toggleValidationStatus));
+    list.add(InvoiceDetailWidget(overallInvoice.invoiceDetails,1,toggleValidationStatus));
     //second page
-    list.add(BillingWidget(overallInvoice.contractorDetails));
+    list.add(BillingWidget(overallInvoice.contractorDetails,2,toggleValidationStatus));
     //third page
-    list.add(BillingWidget(overallInvoice.clientDetails));
+    list.add(BillingWidget(overallInvoice.clientDetails,3,toggleValidationStatus));
     //fourth page
     list.add(ServiceDetailWidget(overallInvoice.serviceDetails));
     return list;

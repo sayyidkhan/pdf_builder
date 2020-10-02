@@ -5,8 +5,9 @@ import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 
 class InvoiceDetailWidget extends StatefulWidget {
   final InvoiceDetails invoiceDetails;
+  final int pageIndex;
   final Function validateController;
-  InvoiceDetailWidget(this.invoiceDetails,this.validateController);
+  InvoiceDetailWidget(this.invoiceDetails,this.pageIndex,this.validateController);
 
   @override
   _InvoiceDetailWidgetState createState() => _InvoiceDetailWidgetState();
@@ -39,12 +40,12 @@ class _InvoiceDetailWidgetState extends State<InvoiceDetailWidget> {
       key: formKey,
       onChanged: () {
         if (formKey.currentState.validate()) {
-          widget.validateController(1,false);
+          widget.validateController(widget.pageIndex,false);
           formKey.currentState.save();
         }
         else {
           //prevent procced to next page if validation is not successful
-          widget.validateController(1,true);
+          widget.validateController(widget.pageIndex,true);
         }
       },
       child: Column(

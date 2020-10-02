@@ -3,8 +3,11 @@ import 'package:pdf_test/database/dao/FormDAO.dart';
 
 //for the contractor & client details
 class BillingWidget extends StatelessWidget {
+  final int pageIndex;
+  final Function validateController;
+
   final formKey = new GlobalKey<FormState>();
-  BillingWidget(this.billingDetails);
+  BillingWidget(this.billingDetails,this.pageIndex,this.validateController);
 
   final BillingDetails billingDetails;
 
@@ -13,7 +16,14 @@ class BillingWidget extends StatelessWidget {
     return Form(
       key: formKey,
       onChanged: () {
-        formKey.currentState.save();
+        if (formKey.currentState.validate()) {
+          validateController(pageIndex,false);
+          formKey.currentState.save();
+        }
+        else {
+          //prevent procced to next page if validation is not successful
+          validateController(pageIndex,true);
+        }
       },
       child: Column(
         children: [
