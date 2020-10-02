@@ -1,5 +1,6 @@
-name: pdf_test
-description: A new Flutter application.
+name: pdf_builder
+description: an app which helps to generate pdf from a form.
+you fill up the neccessary details in the form and after that u convert it into a pdf.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
