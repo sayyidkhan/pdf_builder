@@ -16,6 +16,11 @@ class _FormScreenState extends State<FormScreen> {
   final List<Widget> list = new List();
   int currentPagination = 1;
   OverallInvoice overallInvoice;
+  //validation controllers
+  bool validateInvoiceDetail = false;
+  bool validateContractorDetail = false;
+  bool validateClientDetail = false;
+  bool validateServiceDetail = false;
 
   @override
   void initState() {
@@ -30,9 +35,42 @@ class _FormScreenState extends State<FormScreen> {
     super.dispose();
   }
 
+  void toggleValidationStatus(int currentPagination,bool status) {
+    switch(currentPagination){
+      case(1):
+        validateInvoiceDetail = status;
+        break;
+      case(2):
+        validateContractorDetail = status;
+        break;
+      case(3):
+        validateClientDetail = status;
+        break;
+      case(4):
+        validateServiceDetail = status;
+        break;
+    }
+  }
+
+  bool checkValidationStatus() {
+    List<bool> validationItem = [
+      validateInvoiceDetail,
+    ];
+    var result;
+    validationItem.forEach((element) {
+      if(element){
+        result = true;
+      }
+      else{
+        result = false;
+      }
+    });
+    return result;
+  }
+
   List<Widget> initPageDetail() {
     //first page
-    list.add(InvoiceDetailWidget(overallInvoice.invoiceDetails));
+    list.add(InvoiceDetailWidget(overallInvoice.invoiceDetails,toggleValidationStatus));
     //second page
     list.add(BillingWidget(overallInvoice.contractorDetails));
     //third page
@@ -84,8 +122,12 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
-  Widget backAndNextButton(BuildContext context) {
+  void validationErrorMsg() {
+    print("validation not success on page ${currentPagination.toString()}");
+    print("clear validation process before proceeding");
+  }
 
+  Widget backAndNextButton(BuildContext context) {
     Expanded backButton() {
       return Expanded(
         child: Padding(
@@ -103,9 +145,16 @@ class _FormScreenState extends State<FormScreen> {
             child: FlatButton(
               textColor: Colors.white,
               onPressed: currentPagination != 1 ? () {
+                //prevent page to navigate, if there is error messages not handled
+                var checkValidationMsgs = checkValidationStatus();
+                if(checkValidationMsgs) {
+                  validationErrorMsg();
+                }
+                else {
                   setState(() {
                     currentPagination--;
                   });
+                }
               }
               :
               null,
@@ -135,15 +184,22 @@ class _FormScreenState extends State<FormScreen> {
             child: FlatButton(
               textColor: Theme.of(context).primaryColor,
               onPressed: () {
-                if (currentPagination < list.length) {
-                  setState(() {
-                    currentPagination++;
-                  });
+                //prevent page to navigate, if there is error messages not handled
+                var checkValidationMsgs = checkValidationStatus();
+                if(checkValidationMsgs){
+                  validationErrorMsg();
                 }
-                else if(currentPagination == list.length){
-                  CreatePdfAlertBox.showAlertDialog(context,overallInvoice);
-                  //print data to verify its content
-                  overallInvoice.printContent();
+                else{
+                  if (currentPagination < list.length) {
+                    setState(() {
+                      currentPagination++;
+                    });
+                  }
+                  else if(currentPagination == list.length){
+                    CreatePdfAlertBox.showAlertDialog(context,overallInvoice);
+                    //print data to verify its content
+                    overallInvoice.printContent();
+                  }
                 }
               },
               child: Text(
@@ -177,9 +233,16 @@ class _FormScreenState extends State<FormScreen> {
 
     return GestureDetector(
       onTap: () {
-        setState(() {
-          currentPagination = number;
-        });
+        //prevent page to navigate, if there is error messages not handled
+        var checkValidationMsgs = checkValidationStatus();
+        if(checkValidationMsgs) {
+          validationErrorMsg();
+        }
+        else {
+          setState(() {
+            currentPagination = number;
+          });
+        }
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 7.5, right: 7.5),
