@@ -86,19 +86,6 @@ class _FormScreenState extends State<FormScreen> {
       }
     }
 
-    bool loopCheckEmptiness(List<String> list) {
-      bool result = false;
-      if (list != null || list.length == 0) {
-        list.forEach((element) {
-          bool state = checkIfNullOrEmpty(element);
-          if (state) {
-            result = true;
-          }
-        });
-      }
-      return result;
-    }
-
     bool validateInvoiceDetails(InvoiceDetails invoiceDetails) {
       bool state = false;
 
@@ -129,11 +116,11 @@ class _FormScreenState extends State<FormScreen> {
 
       if (validateInvoiceDetails(invoiceDetails)) {
         state = true;
-        buffer.write("1. Field in the Invoice Details are incomplete. \n alop");
+        buffer.write("1.Invoice Details incomplete Fields. \n alop");
       }
 
       errorMessage = buffer.toString();
-      if(errorMessage.isNotEmpty){
+      if(errorMessage.isNotEmpty) {
         print(errorMessage);
       }
     }

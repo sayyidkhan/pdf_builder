@@ -5,7 +5,7 @@ class ConfirmDeleteAlertBoxButton extends StatelessWidget {
   final Function deleteFunction;
   final PdfDB pdf;
 
-  ConfirmDeleteAlertBoxButton(this.deleteFunction,this.pdf);
+  ConfirmDeleteAlertBoxButton(this.deleteFunction, this.pdf);
 
   @override
   Widget build(BuildContext context) {
@@ -15,33 +15,36 @@ class ConfirmDeleteAlertBoxButton extends StatelessWidget {
         color: Colors.red[600],
       ),
       onPressed: () async {
-        showAlertDialog(context: context,deleteFunction: deleteFunction,pdf: pdf);
+        showAlertDialog(
+            context: context, deleteFunction: deleteFunction, pdf: pdf);
       },
     );
   }
 
-  showAlertDialog({BuildContext context,Function deleteFunction,PdfDB pdf}) {
+  showAlertDialog({BuildContext context, Function deleteFunction, PdfDB pdf}) {
     var result;
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.of(context).pop();
-        deleteFunction(false,pdf);
+        deleteFunction(false, pdf);
       },
     );
     Widget continueButton = FlatButton(
       child: Text("Continue"),
       onPressed: () {
         Navigator.of(context).pop();
-        deleteFunction(true,pdf);
+        deleteFunction(true, pdf);
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("AlertDialog"),
-      content: Text("Would you like to proceed with the delete of ${pdf.fileName}?"),
+      content: Text(
+        "Would you like to proceed with the delete of ${pdf.fileName}?",
+      ),
       actions: [
         cancelButton,
         continueButton,
@@ -58,5 +61,4 @@ class ConfirmDeleteAlertBoxButton extends StatelessWidget {
 
     return result;
   }
-
 }

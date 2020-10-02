@@ -15,7 +15,7 @@ class FieldValidationAlertBox {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Incomplete Fields"),
-      content: Text(errorMessage.toString()),
+      content: Text(errorMessage.toString(),style: TextStyle(fontSize: 14),),
       actions: [
         okButton,
       ],
