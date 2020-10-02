@@ -4,5 +4,5 @@
 A Mobile App which you will use a form to fill up your contract details and generate a pdf from the form which u have filled up.
 
 
-## Logo Design on IOS
+## App Logo on IOS Homepage
 
