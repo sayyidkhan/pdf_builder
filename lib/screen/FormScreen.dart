@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_test/database/dao/FormDAO.dart';
 import 'package:pdf_test/widget/ui/alertbox/CreatePdfAlertBox.dart';
+import 'package:pdf_test/widget/ui/alertbox/FieldValidationAlertBox.dart';
 import 'package:pdf_test/widget/ui/form/BillingDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/InvoiceDetailWidget.dart';
 import 'package:pdf_test/widget/ui/form/ServiceDetailWidget.dart';
@@ -74,7 +75,7 @@ class _FormScreenState extends State<FormScreen> {
     return result;
   }
 
-  bool validateAllFields(String errorMessage) {
+  bool validateAllFields() {
     bool checkIfNullOrEmpty(String value) {
       if (value != null) {
         value.trim();
@@ -269,8 +270,9 @@ class _FormScreenState extends State<FormScreen> {
                       currentPagination++;
                     });
                   } else if (currentPagination == list.length) {
-                    if (validateAllFields(errorMessage)) {
-
+                    if (validateAllFields()) {
+                      FieldValidationAlertBox.showAlertDialog(context,errorMessage);
+                      errorMessage = "";
                     } else {
                       CreatePdfAlertBox.showAlertDialog(context, overallInvoice);
                       //print data to verify its content

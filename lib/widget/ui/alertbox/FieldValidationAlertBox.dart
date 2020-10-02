@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 class FieldValidationAlertBox {
 
-  static showAlertDialog(BuildContext context) {
+  static showAlertDialog(BuildContext context,String errorMessage) {
 
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
-      onPressed: () { },
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("My title"),
-      content: Text("This is my message."),
+      title: Text("Incomplete Fields"),
+      content: Text(errorMessage.toString()),
       actions: [
         okButton,
       ],
