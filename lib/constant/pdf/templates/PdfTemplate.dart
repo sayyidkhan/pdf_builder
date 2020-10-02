@@ -1,15 +1,9 @@
 import 'dart:typed_data';
-
-import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:image/image.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as widgets;
-import 'package:flutter/material.dart' as fm;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf_test/database/dao/FormDAO.dart';
-import 'package:pdf_test/widget/pdf/InvoicePageWidget.dart';
+import 'package:pdf_builder/database/dao/FormDAO.dart';
+import 'package:pdf_builder/widget/pdf/InvoicePageWidget.dart';
 
 class PdfTemplate {
   static _validateNullText(String text) {

@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart';
-import 'package:pdf_test/constant/pdf/crud/PdfReader.dart';
-import 'package:pdf_test/constant/pdf/templates/PdfTemplate.dart';
+import 'package:pdf_builder/constant/pdf/crud/PdfReader.dart';
+import 'package:pdf_builder/constant/pdf/templates/PdfTemplate.dart';
 
-import 'package:pdf_test/database/dao/FormDAO.dart';
-import 'package:pdf_test/database/io/IoOperations.dart';
-import 'package:pdf_test/database/sql/db_helper.dart';
-import 'package:pdf_test/database/dao/pdfDAO.dart';
+import 'package:pdf_builder/database/dao/FormDAO.dart';
+import 'package:pdf_builder/database/io/IoOperations.dart';
+import 'package:pdf_builder/database/sql/db_helper.dart';
+import 'package:pdf_builder/database/dao/pdfDAO.dart';
 
 class PdfBuilder {
   bool filePathAssigned = false;

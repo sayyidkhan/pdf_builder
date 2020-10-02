@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pdf_test/database/dao/FormDAO.dart';
+import 'package:pdf_builder/database/dao/FormDAO.dart';
 
 class ServiceDetailWidget extends StatefulWidget {
   final List<ServiceDetails> serviceDetails;

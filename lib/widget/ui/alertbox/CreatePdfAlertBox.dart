@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_test/constant/alertbox/AlertBoxContent.dart';
-import 'package:pdf_test/constant/pdf/crud/PdfBuilder.dart';
-import 'package:pdf_test/database/dao/FormDAO.dart';
-import 'package:pdf_test/main.dart';
-import 'package:pdf_test/widget/transitions/PageTransistions.dart';
+import 'package:pdf_builder/constant/alertbox/AlertBoxContent.dart';
+import 'package:pdf_builder/constant/pdf/crud/PdfBuilder.dart';
+import 'package:pdf_builder/database/dao/FormDAO.dart';
+import 'package:pdf_builder/main.dart';
+import 'package:pdf_builder/widget/transitions/PageTransistions.dart';
 
 class CreatePdfAlertBox {
   static List<Widget> listOfButtons = initListOfButtons();

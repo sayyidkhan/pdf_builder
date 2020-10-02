@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pdf_test/screen/PdfPreviewScreen.dart';
+import 'package:pdf_builder/screen/PdfPreviewScreen.dart';
 
 class PdfReader {
   static void navigateToPDFPage(BuildContext context, String filePath) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
-import 'package:pdf_test/main.dart';
-import 'package:pdf_test/widget/transitions/PageTransistions.dart';
+import 'package:pdf_builder/main.dart';
+import 'package:pdf_builder/widget/transitions/PageTransistions.dart';
 import 'package:share/share.dart';
 
 class PdfPreviewScreen extends StatelessWidget {

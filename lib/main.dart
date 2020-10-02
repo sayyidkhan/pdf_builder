@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pdf_test/screen/InvoiceBuilderListScreen.dart';
-import 'package:pdf_test/screen/FormScreen.dart';
+import 'package:pdf_builder/screen/InvoiceBuilderListScreen.dart';
+import 'package:pdf_builder/screen/FormScreen.dart';
 
 void main() => runApp(MyApp());
 

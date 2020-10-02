@@ -7,8 +7,6 @@ PODS:
   - FMDB/standard (2.7.5)
   - path_provider (0.0.1):
     - Flutter
-  - printing (0.0.1):
-    - Flutter
   - share (0.0.1):
     - Flutter
   - sqflite (0.0.1):
@@ -19,7 +17,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
-  - printing (from `.symlinks/plugins/printing/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
@@ -34,8 +31,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_full_pdf_viewer/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
-  printing:
-    :path: ".symlinks/plugins/printing/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   sqflite:
@@ -46,7 +41,6 @@ SPEC CHECKSUMS:
   flutter_full_pdf_viewer: 1b65139fc3236cde300ba6bea2a72669cb07f2e6
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
-  printing: 5ec249946ebbd51cead5ed9b0b48113bb5141bcf
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
 
