@@ -38,6 +38,11 @@ User creates a new PDF file by clicking on the plus button
 user fills up the document via the four step process
 
 ### Confirmation Screens while creating the PDF
+<img src="https://user-images.githubusercontent.com/22993048/94993252-3a02fa00-05c2-11eb-8bae-69a6242510d8.jpg" width="120%" height="120%">
+
+User can go back to the main or view the PDF screen.
+
+### Updated UI Homepage (with the new PDF added)
 
 
 ### PDF Preview & Download Screen
