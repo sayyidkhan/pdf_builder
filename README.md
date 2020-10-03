@@ -23,7 +23,7 @@ A Mobile App which you will use a form to fill up your contract details and gene
 
 ## Mobile App Homepage
 ### Homepage of App
-![invoice builder](https://user-images.githubusercontent.com/22993048/94992324-e2619000-05bb-11eb-820f-dbe36839beb0.jpeg)
+![invoice-builder-u](https://user-images.githubusercontent.com/22993048/94992370-25236800-05bc-11eb-857d-d6ff70c72900.jpg)
 
 
 ### PDF Preview & Download Screen
