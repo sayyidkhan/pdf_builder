@@ -22,7 +22,8 @@ A Mobile App which you will use a form to fill up your contract details and gene
 ## App Logo on IOS Homepage
 <img width="300" src="https://user-images.githubusercontent.com/22993048/94937364-11b3c680-0502-11eb-802c-905d034e674d.png">
 
-## Mobile App Homepage
+## Mobile App Use
+### Homepage
 <img src="https://user-images.githubusercontent.com/22993048/94992874-8862c980-05bf-11eb-86d7-5e66e20c9369.PNG" width="30%" height="30%">
 
 User creates a new PDF file by clicking on the plus button
@@ -35,6 +36,9 @@ User creates a new PDF file by clicking on the plus button
 3. Client Details
 4. Service Details
 user fills up the document via the four step process
+
+### Confirmation Screens while creating the PDF
+
 
 ### PDF Preview & Download Screen
 ![view_and_download](https://user-images.githubusercontent.com/22993048/94992294-a6c6c600-05bb-11eb-9a18-4629cd5e8572.jpg)
