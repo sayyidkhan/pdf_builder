@@ -21,10 +21,10 @@ A Mobile App which you will use a form to fill up your contract details and gene
 
 ## App Logo on IOS Homepage
 <img width="435" alt="Screenshot 2020-10-02 at 10 48 37 PM" src="https://user-images.githubusercontent.com/22993048/94937364-11b3c680-0502-11eb-802c-905d034e674d.png">
-
+<img src="https://user-images.githubusercontent.com/22993048/94992874-8862c980-05bf-11eb-86d7-5e66e20c9369.PNG" width="40%" height="40%">
 ## Mobile App Homepage
 ### Homepage of App
-<img src="https://user-images.githubusercontent.com/22993048/94992874-8862c980-05bf-11eb-86d7-5e66e20c9369.PNG" width="40%" height="40%">
+
 
 ### PDF Preview & Download Screen
 ![view_and_download](https://user-images.githubusercontent.com/22993048/94992294-a6c6c600-05bb-11eb-9a18-4629cd5e8572.jpg)
