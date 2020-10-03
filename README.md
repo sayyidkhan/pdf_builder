@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/22993048/94937048-a5d15e00-0501-11eb-890e-df3a4561d5e6.jpg" width="8%" height="8%">
+<img src="https://user-images.githubusercontent.com/22993048/94937048-a5d15e00-0501-11eb-890e-df3a4561d5e6.jpg" width="6%" height="6%">
 
 # PDF Builder (Flutter Mobile Application)
 ### Built in Flutter & SQL
@@ -46,4 +46,5 @@ User can go back to the main or view the PDF screen.
 <img src="https://user-images.githubusercontent.com/22993048/94993323-b39ae800-05c2-11eb-80d6-7c02730fe210.PNG" width="30%" height="30%">
 
 ### PDF Preview & Download Screen
-![view_and_download](https://user-images.githubusercontent.com/22993048/94992294-a6c6c600-05bb-11eb-9a18-4629cd5e8572.jpg)
+<img src="https://user-images.githubusercontent.com/22993048/94993357-05437280-05c3-11eb-85b2-77667c945505.jpg" width="100%" height="100%">
+User is able to view PDF and download / Send PDF to client
