@@ -25,9 +25,16 @@ A Mobile App which you will use a form to fill up your contract details and gene
 ## Mobile App Homepage
 <img src="https://user-images.githubusercontent.com/22993048/94992874-8862c980-05bf-11eb-86d7-5e66e20c9369.PNG" width="30%" height="30%">
 
+User creates a new PDF file by clicking on the plus button
+
 ### Create PDF By Filling Up a Form
 <img src="https://user-images.githubusercontent.com/22993048/94993083-05427300-05c1-11eb-8097-1e39d1670410.jpg" width="120%" height="120%">
 
+1. Invoice Details
+2. Contractor Details
+3. Client Details
+4. Service Details
+user fills up the document via the four step process
 
 ### PDF Preview & Download Screen
 ![view_and_download](https://user-images.githubusercontent.com/22993048/94992294-a6c6c600-05bb-11eb-9a18-4629cd5e8572.jpg)
