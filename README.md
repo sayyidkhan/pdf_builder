@@ -20,10 +20,10 @@ A Mobile App which you will use a form to fill up your contract details and gene
 ** ensure to build the pubspec.yaml file dependencies first prior to running on the mobile app emulator **
 
 ## App Logo on IOS Homepage
-<img width="400" src="https://user-images.githubusercontent.com/22993048/94937364-11b3c680-0502-11eb-802c-905d034e674d.png">
+<img width="300" src="https://user-images.githubusercontent.com/22993048/94937364-11b3c680-0502-11eb-802c-905d034e674d.png">
 
 ## Mobile App Homepage
-<img src="https://user-images.githubusercontent.com/22993048/94992874-8862c980-05bf-11eb-86d7-5e66e20c9369.PNG" width="40%" height="40%">
+<img src="https://user-images.githubusercontent.com/22993048/94992874-8862c980-05bf-11eb-86d7-5e66e20c9369.PNG" width="30%" height="30%">
 
 ### Create PDF By Filling Up a Form
 <img src="https://user-images.githubusercontent.com/22993048/94993083-05427300-05c1-11eb-8097-1e39d1670410.jpg" width="120%" height="120%">
