@@ -43,7 +43,7 @@ user fills up the document via the four step process
 User can go back to the main or view the PDF screen.
 
 ### Updated UI Homepage (with the new PDF added)
-
+<img src="https://user-images.githubusercontent.com/22993048/94993323-b39ae800-05c2-11eb-80d6-7c02730fe210.PNG" width="30%" height="30%">
 
 ### PDF Preview & Download Screen
 ![view_and_download](https://user-images.githubusercontent.com/22993048/94992294-a6c6c600-05bb-11eb-9a18-4629cd5e8572.jpg)
