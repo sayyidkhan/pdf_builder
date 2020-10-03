@@ -22,3 +22,7 @@ A Mobile App which you will use a form to fill up your contract details and gene
 <img width="435" alt="Screenshot 2020-10-02 at 10 48 37 PM" src="https://user-images.githubusercontent.com/22993048/94937364-11b3c680-0502-11eb-802c-905d034e674d.png">
 
 ## Mobile App Homepage
+### Homepage of App
+
+
+### PDF Preview & Download Screen 
