@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/22993048/94937048-a5d15e00-0501-11eb-890e-df3a4561d5e6.jpg" width="15%" height="15%">
+<img src="https://user-images.githubusercontent.com/22993048/94937048-a5d15e00-0501-11eb-890e-df3a4561d5e6.jpg" width="10%" height="10%">
 
 # PDF Builder (Flutter Mobile Application)
 ### Built in Flutter & SQL
