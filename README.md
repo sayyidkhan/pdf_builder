@@ -25,4 +25,5 @@ A Mobile App which you will use a form to fill up your contract details and gene
 ### Homepage of App
 
 
-### PDF Preview & Download Screen 
+### PDF Preview & Download Screen
+![view_and_download](https://user-images.githubusercontent.com/22993048/94992294-a6c6c600-05bb-11eb-9a18-4629cd5e8572.jpg)
